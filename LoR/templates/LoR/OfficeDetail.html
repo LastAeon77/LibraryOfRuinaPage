@@ -1,0 +1,6 @@
+{% load static %}
+<h1>{{ office.Name }}</h1>
+
+<body>
+    <h2>{{office.Info}}</h2>
+    <img src = "{% static  office.ImgPath  %}" alt = "{{office.Name}} Icon" />

@@ -1,0 +1,7 @@
+{% load static %}
+<h1>{{ rank.Name }}</h1>
+
+<body>
+    <h2>"{{rank.Slogan}}"</h2>
+    <h4>{{rank.Description}}</h4>
+    <img src = "{% static rank.ImgPath %}" alt = "{{rank.Name}} Icon" />
