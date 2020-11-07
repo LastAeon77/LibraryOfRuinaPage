@@ -1,0 +1,21 @@
+<h1>List of Cards</h1>
+
+<body>
+    <ul> 
+        
+        {% for ranks in rank %}
+            <h3>{{ranks.RankName}}</h3>
+            {% for offices in office%}
+                {%if offices.Rank_id == ranks.id%}
+                <li>{{ offices.OfficeName }}</li>
+                <ul>
+                    {% for cards in card%}
+                        {%if cards.Office_id == offices.id%}
+                        <li><a href="{% url 'LoR:Card' slug=cards.slug %}">{{cards.Name}}</a></li>
+                        {%endif%}
+                    {% endfor %}
+                </ul>
+                {%endif%}
+            {% endfor %}
+        {% endfor %}
+    </ul> 

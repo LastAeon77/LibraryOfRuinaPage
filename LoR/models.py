@@ -27,6 +27,7 @@ class Office(models.Model):
 class Page(models.Model):
     Name = models.CharField(max_length=200, unique=True)
     Story = models.TextField()
+    InGameId = models.IntegerField(unique=True)
 
     class RarityChoice(models.TextChoices):
         PAPERBACK = "P", laz("Paperback")
@@ -34,7 +35,7 @@ class Page(models.Model):
         HARDCOVER = "H", laz("Hardcover")
         OBJETDART = "O", laz("Objet d'art")
         EGO = "E", laz("EGO")
-        
+
     Rarity = models.CharField(
         max_length=1,
         choices=RarityChoice.choices,
@@ -49,10 +50,10 @@ class Page(models.Model):
 
 class Character(models.Model):
     Name = models.CharField(max_length=100, unique=True)
-    Story = models.TextField()
+    Story = models.TextField(null=True)
     Office = models.ForeignKey(Office, on_delete=models.CASCADE)
     Page = models.ForeignKey(Page, on_delete=models.CASCADE, null=True)
-    ImgPath = models.CharField(max_length=300)
+    ImgPath = models.CharField(max_length=300, null=True)
     slug = models.SlugField(null=True)
 
     def __str__(self):
@@ -62,6 +63,7 @@ class Character(models.Model):
 class Effects(models.Model):
     Name = models.CharField(max_length=200)
     Description = models.TextField()
+    InGameId = models.IntegerField(unique=True)
 
 
 class Rel_Page_Eff(models.Model):
@@ -74,8 +76,8 @@ class Card(models.Model):
 
     class RarityChoice(models.TextChoices):
         PAPERBACK = "P", laz("Paperback")
-        LIMITED = "L", laz("Limited")
         HARDCOVER = "H", laz("Hardcover")
+        LIMITED = "L", laz("Limited")
         OBJETDART = "O", laz("Objet d'art")
         EGO = "E", laz("EGO")
 
@@ -87,7 +89,7 @@ class Card(models.Model):
     )
     Obtainable = models.BooleanField(default=True)
     Cost = models.IntegerField()
-    On_Play_Effect = models.TextField(null=True)
+    On_Play_Effect = models.TextField(null=True, blank=True)
     Dice_Number = models.IntegerField(null=True)
     Office = models.ForeignKey(Office, on_delete=models.CASCADE)
     ImgPath = models.CharField(max_length=300, null=True)
@@ -101,23 +103,35 @@ class Card(models.Model):
         EVADE = "EV", laz("Evade")
         BLOCK = "BO", laz("Block")
 
+    class CardTypes(models.TextChoices):
+        MELEE = "M", laz("Melee")
+        RANGED = "R", laz("Ranged")
+
+    CardType = models.CharField(
+        max_length=1,
+        choices=CardTypes.choices,
+        null=True,
+        blank=True,
+        default=CardTypes.MELEE,
+    )
+
     Type1 = models.CharField(
-        max_length=2, choices=Types.choices, default=Types.BLUNT, null=True, blank=True
+        max_length=2, choices=Types.choices, null=True, blank=True, default=None
     )
     Roll2 = models.CharField(max_length=10, null=True, blank=True)
     Eff2 = models.CharField(max_length=200, null=True, blank=True)
     Type2 = models.CharField(
-        max_length=2, choices=Types.choices, default=Types.BLUNT, null=True, blank=True
+        max_length=2, choices=Types.choices, null=True, blank=True, default=None
     )
     Roll3 = models.CharField(max_length=10, null=True, blank=True)
     Eff3 = models.CharField(max_length=200, null=True, blank=True)
     Type3 = models.CharField(
-        max_length=2, choices=Types.choices, default=Types.BLUNT, null=True, blank=True
+        max_length=2, choices=Types.choices, null=True, blank=True, default=None
     )
     Roll4 = models.CharField(max_length=10, null=True, blank=True)
     Eff4 = models.CharField(max_length=200, null=True, blank=True)
     Type4 = models.CharField(
-        max_length=2, choices=Types.choices, default=Types.BLUNT, null=True, blank=True
+        max_length=2, choices=Types.choices, null=True, blank=True, default=None
     )
     slug = models.SlugField(null=True)
 
