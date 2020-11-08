@@ -10,4 +10,5 @@ urlpatterns = [
     path("Office/<slug:slug>/", views.OfficeView.as_view(), name="Office"),
     path("Rank/<slug:slug>/", views.RankView.as_view(), name="Rank"),
     path("Card/<slug:slug>/", views.CardDetailView, name="Card"),
+    path("Deck/add/", views.deck_maker_form, name="DeckAdd"),
 ] + staticfiles_urlpatterns()

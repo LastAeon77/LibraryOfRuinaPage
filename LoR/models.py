@@ -24,6 +24,12 @@ class Office(models.Model):
         return self.Name
 
 
+class Effects(models.Model):
+    Name = models.CharField(max_length=200)
+    Description = models.TextField()
+    InGameId = models.IntegerField(unique=True)
+
+
 class Page(models.Model):
     Name = models.CharField(max_length=200, unique=True)
     Story = models.TextField()
@@ -42,6 +48,7 @@ class Page(models.Model):
         default=RarityChoice.PAPERBACK,
         null=True,
     )
+    InitialEffects = models.ManyToManyField(Effects)
     slug = models.SlugField(null=True)
 
     def __str__(self):
@@ -58,12 +65,6 @@ class Character(models.Model):
 
     def __str__(self):
         return self.Name
-
-
-class Effects(models.Model):
-    Name = models.CharField(max_length=200)
-    Description = models.TextField()
-    InGameId = models.IntegerField(unique=True)
 
 
 class Rel_Page_Eff(models.Model):

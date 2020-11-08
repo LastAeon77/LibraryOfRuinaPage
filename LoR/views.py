@@ -1,11 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
-from django.utils import timezone
 from django.views import generic
 from .models import Office, Rank, Card
-from django import template
-from django.db import connection
+from .forms import DeckMakerForm
 
 
 class IndexView(generic.ListView):
@@ -74,3 +71,17 @@ ORDER BY O.id
     )
     context = {"card": Cards, "office": Offices, "rank": Ranks}
     return render(request, "LoR/CardHome.html", context)
+
+
+def deck_maker_form(request):
+    if request.method == "POST":
+        form = DeckMakerForm(request.POST)
+        if form.is_valid():
+            deck_name = form.cleaned_data["deck_name"]
+            deck_creator = form.cleaned_data["deck_creator"]
+            deck_description = form.cleaned_data["deck_description"]
+            print(deck_name, deck_creator, deck_description)
+
+    form = DeckMakerForm()
+    context = {"form": form}
+    return render(request, "LoR/deckMakingForm.html", context)
