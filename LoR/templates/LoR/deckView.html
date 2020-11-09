@@ -1,0 +1,13 @@
+{%load static%}
+
+<head><link rel="stylesheet" href="{% static 'LoR_Data/css/CardDetail.css'%}"></head>
+<body>
+    <h1>{{ deck.name }}</h1>
+    <p>Created By: {{deck.creator}}</p>
+    <p>Use Case: {{deck.description}}</p>
+    <ul>
+        {%for cards in deckCards%}
+        <li>{{cards.card_id}} x{{cards.card_count}}</li>
+        {% endfor %}
+    </ul>
+</body>

@@ -1,12 +1,10 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
-from .models import Office, Rank, Card
+from .models import Office, Rank, Card, Deck, RelDeck
 from .forms import DeckMakerForm
-
-
-class IndexView(generic.ListView):
-    pass
+from django.urls import reverse
+import collections
 
 
 def HomePage(request):
@@ -74,11 +72,51 @@ ORDER BY O.id
 
 
 def deck_maker_form(request):
-    if request.method == "POST":
-        form = DeckMakerForm(request.POST)
-        if form.is_valid():
-            form.save()
+    if request.user.is_authenticated:
+
+        if request.method == "POST":
+            form = DeckMakerForm(request.POST)
+            if form.is_valid():
+                name = form.cleaned_data["deck_name"]
+                creator = request.user.username
+                desc = form.cleaned_data["deck_description"]
+                card1 = form.cleaned_data["card_1"]
+                card2 = form.cleaned_data["card_2"]
+                card3 = form.cleaned_data["card_3"]
+                card4 = form.cleaned_data["card_4"]
+                card5 = form.cleaned_data["card_5"]
+                card6 = form.cleaned_data["card_6"]
+                card7 = form.cleaned_data["card_7"]
+                card8 = form.cleaned_data["card_8"]
+                card9 = form.cleaned_data["card_9"]
+                list_of_card = [
+                    card1,
+                    card2,
+                    card3,
+                    card4,
+                    card5,
+                    card6,
+                    card7,
+                    card8,
+                    card9,
+                ]
+                y = collections.Counter(list_of_card)
+                q = Deck(name=name, creator=creator, description=desc)
+                q.save()
+                for cards in y:
+                    q.cards.add(cards, through_defaults={"card_count": y[cards]})
+                q.save()
+                # form.save()
+        else:
+            form = DeckMakerForm()
+        context = {"form": form}
+        return render(request, "LoR/deckMakingForm.html", context)
     else:
-        form = DeckMakerForm()
-    context = {"form": form}
-    return render(request, "LoR/deckMakingForm.html", context)
+        return HttpResponseRedirect(reverse("Home"))
+
+
+def deckView(request, pk):
+    deckCards = RelDeck.objects.filter(deck_id=pk)
+    deck = Deck.objects.filter(id=pk)
+    context = {"deck": deck[0], "deckCards": deckCards}
+    return render(request, "LoR/deckView.html", context)

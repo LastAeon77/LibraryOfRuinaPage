@@ -11,7 +11,7 @@
                 <ul>
                     {% for cards in card%}
                         {%if cards.Office_id == offices.id%}
-                        <li><a href="{% url 'LoR:Card' slug=cards.slug %}">{{cards.Name}}</a></li>
+                        <li><a href="{% url 'lor:Card' slug=cards.slug %}">{{cards.Name}}</a></li>
                         {%endif%}
                     {% endfor %}
                 </ul>

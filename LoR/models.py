@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as laz
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Rank(models.Model):
@@ -147,12 +148,18 @@ class Deck(models.Model):
     name = models.CharField(max_length=100, unique=True)
     creator = models.CharField(max_length=100)
     description = models.CharField(max_length=400)
-    cards = models.ManyToManyField(Card)
+    cards = models.ManyToManyField(Card, through="RelDeck")
 
     def __str__(self):
-        return self.Name
+        return self.name
 
 
-# class RelDeck(models.Model):
-#     deck_id = models.ForeignKey(Deck, on_delete=models.CASCADE)
-#     card_id = models.ForeignKey(Card, on_delete=models.CASCADE)
+class RelDeck(models.Model):
+    deck_id = models.ForeignKey(Deck, on_delete=models.CASCADE)
+    card_id = models.ForeignKey(Card, on_delete=models.CASCADE)
+    card_count = models.IntegerField(
+        validators=[MaxValueValidator(4), MinValueValidator(0)]
+    )
+
+    def __str__(self):
+        return self.deck_id.name

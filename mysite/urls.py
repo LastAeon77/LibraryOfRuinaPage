@@ -19,6 +19,6 @@ from . import views
 
 urlpatterns = [
     path("", views.HomePage, name="HomePage"),
-    path("LoR/", include("LoR.urls"), name="LibraryOfRuina"),
+    path("lor/", include("LoR.urls"), name="LibraryOfRuina"),
     path("admin/", admin.site.urls),
 ]
