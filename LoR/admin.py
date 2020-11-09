@@ -5,7 +5,6 @@ from .models import (
     Office,
     Rank,
     Deck,
-    RelDeck,
     Rel_Page_Eff,
     Page,
     Character,
@@ -15,7 +14,6 @@ from .models import (
 admin.site.register(Office)
 admin.site.register(Rank)
 admin.site.register(Deck)
-admin.site.register(RelDeck)
 admin.site.register(Rel_Page_Eff)
 admin.site.register(Page)
 admin.site.register(Character)

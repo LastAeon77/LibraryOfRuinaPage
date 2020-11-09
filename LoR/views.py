@@ -77,11 +77,8 @@ def deck_maker_form(request):
     if request.method == "POST":
         form = DeckMakerForm(request.POST)
         if form.is_valid():
-            deck_name = form.cleaned_data["deck_name"]
-            deck_creator = form.cleaned_data["deck_creator"]
-            deck_description = form.cleaned_data["deck_description"]
-            print(deck_name, deck_creator, deck_description)
-
-    form = DeckMakerForm()
+            form.save()
+    else:
+        form = DeckMakerForm()
     context = {"form": form}
     return render(request, "LoR/deckMakingForm.html", context)

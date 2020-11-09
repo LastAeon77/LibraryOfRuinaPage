@@ -139,16 +139,20 @@ class Card(models.Model):
     def __str__(self):
         return self.Name
 
+    def getid(self):
+        return self.pk
+
 
 class Deck(models.Model):
-    Name = models.CharField(max_length=100, unique=True)
-    Creator = models.CharField(max_length=100)
-    Description = models.CharField(max_length=400)
+    name = models.CharField(max_length=100, unique=True)
+    creator = models.CharField(max_length=100)
+    description = models.CharField(max_length=400)
+    cards = models.ManyToManyField(Card)
 
     def __str__(self):
         return self.Name
 
 
-class RelDeck(models.Model):
-    deck_id = models.ForeignKey(Deck, on_delete=models.CASCADE)
-    card_id = models.ForeignKey(Card, on_delete=models.CASCADE)
+# class RelDeck(models.Model):
+#     deck_id = models.ForeignKey(Deck, on_delete=models.CASCADE)
+#     card_id = models.ForeignKey(Card, on_delete=models.CASCADE)
