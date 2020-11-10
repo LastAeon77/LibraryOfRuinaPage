@@ -6,6 +6,6 @@
     <ul> 
         
         {% for decks in deckie %}
-            <li><a href="{% url 'lor:Char' pk=decks.pk %}">{{decks.name}}</a></li>
+            <li><a href="{% url 'lor:Deck' pk=decks.pk %}">{{decks.name}}</a></li>
         {% endfor %}
     </ul> 

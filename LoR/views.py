@@ -109,7 +109,7 @@ def deck_maker_form(request):
                     q.cards.add(cards, through_defaults={"card_count": y[cards]})
                 q.save()
                 # form.save()
-                return HttpResponseRedirect(reverse("lor:Deck", args=[q.pk]))
+                return HttpResponseRedirect(reverse("lor:Deck", args=(q.id,)))
 
         else:
             form = DeckMakerForm()

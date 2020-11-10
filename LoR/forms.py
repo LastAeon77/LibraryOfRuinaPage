@@ -45,7 +45,7 @@ class DeckMakerForm(forms.Form):
     card_9 = forms.ModelChoiceField(queryset=Card.objects.all().order_by("Name"))
 
     def clean(self):
-        N = self.cleaned_data("deck_name")
+        N = self.cleaned_data.get("deck_name")
         N = Deck.objects.filter(name=N)
         if N:
             raise forms.ValidationError("That name is taken!")
