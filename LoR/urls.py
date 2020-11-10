@@ -11,6 +11,12 @@ urlpatterns = [
     path("rank/<slug:slug>/", views.RankView.as_view(), name="Rank"),
     path("card/<slug:slug>/", views.CardDetailView, name="Card"),
     path("deck/add/", views.deck_maker_form, name="DeckAdd"),
-    path("deck/<int:pk>", views.deckView, name="DeckAdd"),
+    path("deck/<int:pk>", views.deckView, name="Deck"),
+    path("deck", views.deckHomeView, name="DeckHome"),
+    path("character/<slug:slug>", views.CharView.as_view(), name="Char"),
+    path("character", views.CharacterList, name="CharHome"),
+    path("page/<slug:slug>", views.PageView.as_view(), name="Page"),
+    path("page", views.PageList, name="PageHome"),
+
 
 ] + staticfiles_urlpatterns()

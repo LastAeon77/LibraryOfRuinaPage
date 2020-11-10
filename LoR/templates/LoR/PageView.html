@@ -1,0 +1,16 @@
+{%load static%}
+<html>
+
+<head>
+    <link rel="stylesheet" href="{% static 'LoR_Data/css/CardDetail.css'%}">
+</head>
+
+<body style="margin:30px ;padding:30px">
+
+    <h1>{{ page.Name }}</h1>
+    <h3>{{page.Office.Name}}</h3>
+    <h3>Story: </h3>
+    <p>{{page.Story}}</p>
+</body>
+
+</html>

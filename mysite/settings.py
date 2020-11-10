@@ -85,7 +85,10 @@ DATABASES = {
         'PASSWORD': key["Database"]["passing"],
         'HOST': key["Database"]["HOST"],
         'PORT': key["Database"]["PORT"],
-    }
+    },
+    'OPTIONS': {
+        "init_command": "SET foreign_key_checks = 0;",
+    },
 }
 
 

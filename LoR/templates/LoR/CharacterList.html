@@ -1,0 +1,27 @@
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'LoR_Data/css/CardDetail.css'%}">
+</head>
+<h1>List of Characters in Library of Ruina</h1>
+
+<body>
+    {% for offcs in offc %}
+    <ul>
+        <h2>{{offcs.Name}}: <img src="{% static  offcs.ImgPath  %}" alt="{{offcs.Name}} Icon" height=30px, width=30px />
+        </h2>
+        {% for char in chars %}
+        {% if char.Page.Office_id == offcs.id %}
+        <li><a href="{% url 'lor:Char' slug=char.slug %}">{{char.Name}}</a></li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% endfor %}
+    <ul>
+        <h2>Others: </h2>
+        {% for char in sideChars %}
+        <li><a href="{% url 'lor:Char' slug=char.slug %}">{{char.Name}}</a></li>
+        {% endfor %}
+    </ul>
+
+</body>

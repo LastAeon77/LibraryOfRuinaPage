@@ -46,7 +46,8 @@ class DeckMakerForm(forms.Form):
 
     def clean(self):
         N = self.cleaned_data("deck_name")
-        if Card.objects.filter(name=N):
+        N = Deck.objects.filter(name=N)
+        if N:
             raise forms.ValidationError("That name is taken!")
         cards1 = self.cleaned_data.get("card_1")
         cards2 = self.cleaned_data.get("card_2")
@@ -71,7 +72,6 @@ class DeckMakerForm(forms.Form):
         y = collections.Counter(list_of_card)
         for x in y:
             if y[x] > 3:
-                print("wtf")
                 raise forms.ValidationError(
                     "You can't have more than a multiple of 3 cards!"
                 )

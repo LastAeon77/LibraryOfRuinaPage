@@ -30,6 +30,9 @@ class Effects(models.Model):
     Description = models.TextField()
     InGameId = models.IntegerField(unique=True)
 
+    def __str__(self):
+        return self.Name
+
 
 class Page(models.Model):
     Name = models.CharField(max_length=200, unique=True)
@@ -49,8 +52,9 @@ class Page(models.Model):
         default=RarityChoice.PAPERBACK,
         null=True,
     )
-    InitialEffects = models.ManyToManyField(Effects)
+    InitialEffects = models.ManyToManyField(Effects, null=True, blank=True)
     slug = models.SlugField(null=True)
+    Office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.Name
@@ -59,18 +63,12 @@ class Page(models.Model):
 class Character(models.Model):
     Name = models.CharField(max_length=100, unique=True)
     Story = models.TextField(null=True)
-    Office = models.ForeignKey(Office, on_delete=models.CASCADE)
     Page = models.ForeignKey(Page, on_delete=models.CASCADE, null=True)
     ImgPath = models.CharField(max_length=300, null=True)
     slug = models.SlugField(null=True)
 
     def __str__(self):
         return self.Name
-
-
-class Rel_Page_Eff(models.Model):
-    Effects = models.ForeignKey(Effects, on_delete=models.CASCADE)
-    Page = models.ForeignKey(Page, on_delete=models.CASCADE)
 
 
 class Card(models.Model):

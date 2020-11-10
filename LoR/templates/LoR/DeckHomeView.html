@@ -1,0 +1,11 @@
+{%load static%}
+<h1>List of Decks</h1>
+<head><link rel="stylesheet" href="{% static 'LoR_Data/css/CardDetail.css'%}"></head>
+
+<body>
+    <ul> 
+        
+        {% for decks in deckie %}
+            <li><a href="{% url 'lor:Char' pk=decks.pk %}">{{decks.name}}</a></li>
+        {% endfor %}
+    </ul> 

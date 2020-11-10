@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
-from .models import Office, Rank, Card, Deck, RelDeck
+from .models import Office, Rank, Card, Deck, RelDeck, Page, Character
 from .forms import DeckMakerForm
 from django.urls import reverse
 import collections
+from django.contrib.auth.decorators import login_required
 
 
 def HomePage(request):
@@ -43,12 +44,12 @@ def OfficeHomePage(request):
 
 def CardDetailView(request, slug):
 
-    Page = Card.objects.raw(
+    pag = Card.objects.raw(
         f"""SELECT C.*, R.`Name` AS `Rank`, O.`Name` AS off,R.ImgPath AS RankImg, O.ImgPath AS OffImg
             FROM lor_office AS O,lor_card AS C,lor_rank AS R
             WHERE R.id = O.rank_id AND O.id = C.Office_id AND C.slug = '{slug}' """
     )
-    context = {"card": Page[0]}
+    context = {"card": pag[0]}
     return render(request, "LoR/CardDetail.html", context)
 
 
@@ -71,6 +72,7 @@ ORDER BY O.id
     return render(request, "LoR/CardHome.html", context)
 
 
+@login_required
 def deck_maker_form(request):
     if request.user.is_authenticated:
 
@@ -107,12 +109,14 @@ def deck_maker_form(request):
                     q.cards.add(cards, through_defaults={"card_count": y[cards]})
                 q.save()
                 # form.save()
+                return HttpResponseRedirect(reverse("lor:Deck", args=[q.pk]))
+
         else:
             form = DeckMakerForm()
         context = {"form": form}
         return render(request, "LoR/deckMakingForm.html", context)
     else:
-        return HttpResponseRedirect(reverse("Home"))
+        return HttpResponseRedirect(reverse("lor:Home"))
 
 
 def deckView(request, pk):
@@ -120,3 +124,34 @@ def deckView(request, pk):
     deck = Deck.objects.filter(id=pk)
     context = {"deck": deck[0], "deckCards": deckCards}
     return render(request, "LoR/deckView.html", context)
+
+
+def deckHomeView(request):
+    deckie = Deck.objects.all()
+    context = {"deckie": deckie}
+    return render(request, "LoR/DeckHomeView.html", context)
+
+
+class CharView(generic.DetailView):
+    model = Character
+    template_name = "LoR/CharacterView.html"
+
+
+class PageView(generic.DetailView):
+    model = Page
+    template_name = "LoR/PageView.html"
+
+
+def PageList(request):
+    p = Page.objects.all()
+    offc = Office.objects.all()
+    context = {"page": p, "offc": offc}
+    return render(request, "LoR/PageList.html", context)
+
+
+def CharacterList(request):
+    chars = Character.objects.all()
+    sideChars = Character.objects.filter(Page_id=None)
+    offc = Office.objects.all()
+    context = {"chars": chars, "sideChars": sideChars, "offc": offc}
+    return render(request, "LoR/CharacterList.html", context)
