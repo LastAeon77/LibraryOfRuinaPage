@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "users.apps.UsersConfig",
     "LoR",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -58,7 +59,7 @@ ROOT_URLCONF = "mysite.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -78,17 +79,25 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
+    # "default": {
+    #     "ENGINE": key["Database"]["ENGINE"],
+    #     "NAME": key["Database"]["NAME"],
+    #     "USER": key["Database"]["USER"],
+    #     "PASSWORD": key["Database"]["passing"],
+    #     "HOST": key["Database"]["HOST"],
+    #     "PORT": key["Database"]["PORT"],
+    # },
+    # "OPTIONS": {
+    #     "init_command": "SET foreign_key_checks = 0;",
+    # },
     'default': {
-        'ENGINE': key["Database"]["ENGINE"],
-        'NAME': key["Database"]["NAME"],
-        'USER': key["Database"]["USER"],
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': key["Database"]["NAME"], 
+        'USER': 'postgres', 
         'PASSWORD': key["Database"]["passing"],
-        'HOST': key["Database"]["HOST"],
-        'PORT': key["Database"]["PORT"],
-    },
-    'OPTIONS': {
-        "init_command": "SET foreign_key_checks = 0;",
-    },
+        'HOST': key["Database"]["HOST"], 
+        'PORT': '5432',
+    }
 }
 
 

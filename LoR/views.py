@@ -32,10 +32,11 @@ def OfficeHomePage(request):
     # results = cursor.fetchall()
     NumberOfOff = Office.objects.raw(
         """
-            SELECT O.Rank_id AS id,R.`Name`, COUNT(*) AS rank_num, R.slug
-            FROM lor_office AS O INNER JOIN lor_rank AS R ON O.Rank_id = R.id
-            GROUP BY O.`Rank_id`
-            ORDER BY O.id"""
+SELECT O."Rank_id" AS id, R."Name", COUNT(*) AS "rank_num", R."slug"
+FROM "LoR_office" AS O INNER JOIN "LoR_rank" AS R ON O."Rank_id" = R."id"
+GROUP BY O."Rank_id", R."Name", R."slug"
+ORDER BY O."Rank_id"
+"""
     )
 
     context = {"Office": Offc, "Counting": NumberOfOff}
@@ -45,9 +46,9 @@ def OfficeHomePage(request):
 def CardDetailView(request, slug):
 
     pag = Card.objects.raw(
-        f"""SELECT C.*, R.`Name` AS `Rank`, O.`Name` AS off,R.ImgPath AS RankImg, O.ImgPath AS OffImg
-            FROM lor_office AS O,lor_card AS C,lor_rank AS R
-            WHERE R.id = O.rank_id AND O.id = C.Office_id AND C.slug = '{slug}' """
+        f"""SELECT C.*, R."Name" AS "Rank", O."Name" AS "off",R."ImgPath" AS "RankImg", O."ImgPath" AS "OffImg"
+FROM "LoR_office" AS O , "LoR_card" AS C,"LoR_rank" AS R
+WHERE R."id" = O."Rank_id" AND O."id" = C."Office_id" AND C."slug" = '{slug}'"""
     )
     context = {"card": pag[0]}
     return render(request, "LoR/CardDetail.html", context)
@@ -56,16 +57,17 @@ def CardDetailView(request, slug):
 def CardHomeView(request):
     Cards = Card.objects.all()
     Offices = Card.objects.raw(
-        """SELECT O.id,O.Rank_id,O.`Name`AS OfficeName,COUNT(*) AS NumberOfCards
-FROM (lor_office AS O INNER JOIN lor_card AS C ON O.id = C.Office_id)
-GROUP BY O.id
-ORDER BY O.id
+        """SELECT O."id",O."Rank_id",O."Name" AS "OfficeName",COUNT(*) AS "NumberOfCards"
+FROM ("LoR_office" AS O INNER JOIN "LoR_card" AS C ON O."id" = C."Office_id")
+GROUP BY O."id"
+ORDER BY O."id"
 """
     )
     Ranks = Card.objects.raw(
-        """SELECT R.id AS id,R.`Name`AS RankName,COUNT(*) AS NumberOfOffices, R.slug
-            FROM (lor_office AS O LEFT JOIN lor_rank AS R ON O.Rank_id = R.id)
-            GROUP BY R.id
+        """SELECT R.id AS id,R."Name" AS RankName,COUNT(*) AS NumberOfOffices, R.slug
+FROM ("LoR_office" AS O LEFT JOIN "LoR_rank" AS R ON O."Rank_id" = R."id")
+GROUP BY R."id"
+ORDER BY R."id"
             """
     )
     context = {"card": Cards, "office": Offices, "rank": Ranks}

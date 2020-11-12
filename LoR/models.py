@@ -52,7 +52,7 @@ class Page(models.Model):
         default=RarityChoice.PAPERBACK,
         null=True,
     )
-    InitialEffects = models.ManyToManyField(Effects, null=True, blank=True)
+    InitialEffects = models.ManyToManyField(Effects, blank=True)
     slug = models.SlugField(null=True)
     Office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
 
