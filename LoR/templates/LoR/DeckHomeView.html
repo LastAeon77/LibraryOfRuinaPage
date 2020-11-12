@@ -1,11 +1,15 @@
-{%load static%}
-<h1>List of Decks</h1>
-<head><link rel="stylesheet" href="{% static 'LoR_Data/css/CardDetail.css'%}"></head>
+{% extends "home/NavBarBase.html" %}
+{% load static%}
+{% block content %}
 
-<body>
-    <ul> 
-        
-        {% for decks in deckie %}
-            <li><a href="{% url 'lor:Deck' pk=decks.pk %}">{{decks.name}}</a></li>
-        {% endfor %}
-    </ul> 
+
+<h1>List of Decks</h1>
+<ul>
+
+    {% for decks in deckie %}
+    <li><a href="{% url 'lor:Deck' pk=decks.pk %}">{{decks.name}}</a></li>
+    {% endfor %}
+</ul>
+
+
+{% endblock content %}

@@ -1,24 +1,17 @@
-<!DOCTYPE html>
-{%load static%}
-<html lang="en">
+{% extends "home/NavBarBase.html" %}
+{% load static %}
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>List of Pages</title>
-</head>
+<ul>
+    {% for o in offc %}
+    <h2>{{o.Name}}</h2>
+    {% for p in page %}
+    {% if p.Office.id == o.id %}
+    <li><a href="{% url 'lor:Page' slug=p.slug %}">{{p.Name}}</a></li>
+    {% endif %}
+    {% endfor  %}
+    {% endfor %}
+</ul>
 
-<body>
-    <ul>
-        {% for o in offc %}
-        <h2>{{o.Name}}</h2>
-        {% for p in page %}
-        {% if p.Office.id == o.id %}
-        <li><a href="{% url 'lor:Page' slug=p.slug %}">{{p.Name}}</a></li>
-        {% endif %}
-        {% endfor  %}
-        {% endfor %}
-    </ul>
-</body>
 
-</html>
+{% endblock content %}

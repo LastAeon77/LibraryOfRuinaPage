@@ -118,7 +118,7 @@ def deck_maker_form(request):
         context = {"form": form}
         return render(request, "LoR/deckMakingForm.html", context)
     else:
-        return HttpResponseRedirect(reverse("lor:Home"))
+        return HttpResponseRedirect(reverse("register"))
 
 
 def deckView(request, pk):

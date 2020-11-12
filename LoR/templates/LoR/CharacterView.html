@@ -1,12 +1,14 @@
-{% load static %}
-<head><link rel="stylesheet" href="{% static 'LoR_Data/css/CardDetail.css'%}"></head>
-<body>
-    <h1>{{ character.Name }}</h1>
-    <h3><a href="{% url 'lor:Office' slug=character.Page.Office.slug %}">{{character.Page.Office.Name}}</a></h3>
-    {% if character.Page.Name %}
-        <h3><a href="{% url 'lor:Page' slug=character.Page.slug %}">{{character.Page.Name}}</a></h3>
-    {% endif %}
-    <h4>{{character.Story}}</h4>
-    <img src = "{% static  character.ImgPath  %}" alt = "{{character.Name}} Icon" />
+{% extends "home/NavBarBase.html" %}
+{% load static%}
+{% block content %}
 
-</body>
+
+<h1>{{ character.Name }}</h1>
+<h3><a href="{% url 'lor:Office' slug=character.Page.Office.slug %}">{{character.Page.Office.Name}}</a></h3>
+{% if character.Page.Name %}
+<h3><a href="{% url 'lor:Page' slug=character.Page.slug %}">{{character.Page.Name}}</a></h3>
+{% endif %}
+<h4>{{character.Story}}</h4>
+<img src="{% static  character.ImgPath  %}" alt="{{character.Name}} Icon" />
+
+{% endblock content %}

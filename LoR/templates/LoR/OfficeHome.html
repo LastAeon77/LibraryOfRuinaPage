@@ -1,14 +1,18 @@
+{% extends "home/NavBarBase.html" %}
+{% load static%}
+{% block content %}
+
 <h1>List of Guests</h1>
 
-<body>
-    <ul> 
-        
-        {% for ranks in Counting %}
-            <h3><a href="{% url 'lor:Rank' slug=ranks.slug %}">{{ranks.Name}}</a>: {{ranks.rank_num}}</h3>
-            {% for offices in Office%}
-                {%if offices.Rank_id == ranks.id%}
-                <li><a href="{% url 'lor:Office' slug=offices.slug %}">{{ offices.Name }}</a></li> 
-                {%endif%}
-            {% endfor %}
-        {% endfor %}
-    </ul> 
+<ul>
+
+    {% for ranks in Counting %}
+    <h3><a href="{% url 'lor:Rank' slug=ranks.slug %}">{{ranks.Name}}</a>: {{ranks.rank_num}}</h3>
+    {% for offices in Office%}
+    {%if offices.Rank_id == ranks.id%}
+    <li><a href="{% url 'lor:Office' slug=offices.slug %}">{{ offices.Name }}</a></li>
+    {%endif%}
+    {% endfor %}
+    {% endfor %}
+</ul>
+{% endblock content %}

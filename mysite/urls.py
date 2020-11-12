@@ -23,4 +23,5 @@ urlpatterns = [
     path("lor/", include("LoR.urls"), name="LibraryOfRuina"),
     path("admin/", admin.site.urls),
     path("register/", user_views.register, name="register"),
+    path("test", views.TestBase, name="BaseTestPage"),
 ]
