@@ -4,12 +4,8 @@ asgiref==3.2.10
 async-timeout==3.0.1
 attrs==20.3.0
 beautifulsoup4==4.9.3
-black==20.8b1
-bs4==0.0.1
 chardet==3.0.4
 click==7.1.2
-discord==1.0.1
-discord.py==1.5.1
 Django==3.1.2
 django-appconf==1.0.4
 django-crispy-forms==1.9.2
