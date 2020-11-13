@@ -13,23 +13,24 @@ import os
 from pathlib import Path
 import json
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-# with open("resources/settings.json", "r") as f:
-#     key = json.load(f)
+with open("resources/settings.json", "r") as f:
+    key = json.load(f)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = key["django"]["Secret_key"]
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = f"{os.environ.get('SECRET_KEY')}"
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = os.environ.get('DEBUG_VALUE') == 'True'
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['https://aeonmoon.herokuapp.com/']
+ALLOWED_HOSTS = ["https://aeonmoon.herokuapp.com/"]
 
 
 # Application definition
@@ -54,7 +55,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "mysite.urls"
@@ -151,7 +152,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 LOGIN_REDIRECT_URL = "HomePage"
 
@@ -161,4 +162,43 @@ LOGIN_URL = "login"
 import django_heroku
 
 django_heroku.settings(locals())
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'mysite.storage.WhiteNoiseStaticFilesStorage'
+
+
+COMPRESS_ENABLED = os.environ.get("COMPRESS_ENABLED", False)
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": (
+                "%(asctime)s [%(process)d] [%(levelname)s] "
+                + "pathname=%(pathname)s lineno=%(lineno)s "
+                + "funcname=%(funcName)s %(message)s"
+            ),
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+        "simple": {"format": "%(levelname)s %(message)s"},
+    },
+    "handlers": {
+        "null": {
+            "level": "DEBUG",
+            "class": "logging.NullHandler",
+        },
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "testlogger": {
+            "handlers": ["console"],
+            "level": "INFO",
+        }
+    },
+}
+
+DEBUG_PROPAGATE_EXCEPTIONS = True
