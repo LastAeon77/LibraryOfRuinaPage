@@ -148,6 +148,7 @@ class Deck(models.Model):
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+        null=True
     )
     description = models.CharField(max_length=400)
     cards = models.ManyToManyField(Card, through="RelDeck")
