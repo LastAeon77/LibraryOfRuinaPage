@@ -3,13 +3,23 @@
 {% block content %}
 
 
-<h1>List of Decks</h1>
-<ul>
-
+<h1 class ="is-size-1">List of Decks</h1>
+<table class="table is-bordered is-fullwidth is-striped has-background-grey">
+    <thead>
+    <tr>
+        <th>Deck Name</th>
+        <th>Creator</th>
+        <th>Id</th>
+    </tr>
+    </thead>
     {% for decks in deckie %}
-    <li><a href="{% url 'lor:Deck' pk=decks.pk %}">{{decks.name}}</a></li>
+    <tr>
+        <td class="notification has-background-grey"><a href="{% url 'lor:Deck' pk=decks.pk %}">{{decks.name}}</a></td>
+        <td>{{decks.creator}}</td>
+        <td>{{decks.id}}</td>
+    </tr>
     {% endfor %}
-</ul>
+</table>
 
 
 {% endblock content %}

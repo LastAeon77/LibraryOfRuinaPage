@@ -1,13 +1,14 @@
 {% extends "home/NavBarBase.html" %}
 {% load static%}
 {% block content %}
+<div class = "has-text-centered">
 
-<h1>List of Guests</h1>
+<h1 class = "is-size-1">List of Guests</h1>
 
 <ul>
 
     {% for ranks in Counting %}
-    <h3><a href="{% url 'lor:Rank' slug=ranks.slug %}">{{ranks.Name}}</a>: {{ranks.rank_num}}</h3>
+    <a href="{% url 'lor:Rank' slug=ranks.slug %}"><h3 class = "is-size-3 has-text-warning-dark">{{ranks.Name}}: {{ranks.rank_num}}</h3></a>
     {% for offices in Office%}
     {%if offices.Rank_id == ranks.id%}
     <li><a href="{% url 'lor:Office' slug=offices.slug %}">{{ offices.Name }}</a></li>
@@ -15,4 +16,6 @@
     {% endfor %}
     {% endfor %}
 </ul>
+</div>
+
 {% endblock content %}

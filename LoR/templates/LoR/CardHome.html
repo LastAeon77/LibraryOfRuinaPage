@@ -2,15 +2,14 @@
 {% load static%}
 {% block content %}
 
-
-<h1>List of Cards</h1>
-
+<div class = "has-text-centered">
+<h1 class = "is-size-1">List of Cards</h1>
 <ul>
-    {% for ranks in rank %}
-    <h3>{{ranks.RankName}}</h3>
+{% for ranks in rank %}
+    <h1 class = "is-size-3">{{ranks.rankname}}</h1>
     {% for offices in office%}
     {%if offices.Rank_id == ranks.id%}
-    <li>{{ offices.OfficeName }}</li>
+    <h2 class = "is-size-5 has-text-warning-dark">{{ offices.OfficeName }}</h2>
     <ul>
         {% for cards in card%}
         {%if cards.Office_id == offices.id%}
@@ -20,7 +19,7 @@
     </ul>
     {%endif%}
     {% endfor %}
-    {% endfor %}
+{% endfor %}
 </ul>
-
+</div>
 {% endblock content %}

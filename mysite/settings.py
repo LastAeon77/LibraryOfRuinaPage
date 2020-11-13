@@ -90,13 +90,13 @@ DATABASES = {
     # "OPTIONS": {
     #     "init_command": "SET foreign_key_checks = 0;",
     # },
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': key["Database"]["NAME"], 
-        'USER': 'postgres', 
-        'PASSWORD': key["Database"]["passing"],
-        'HOST': key["Database"]["HOST"], 
-        'PORT': '5432',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": key["Database"]["NAME"],
+        "USER": "postgres",
+        "PASSWORD": key["Database"]["passing"],
+        "HOST": key["Database"]["HOST"],
+        "PORT": "5432",
     }
 }
 
@@ -141,3 +141,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+LOGIN_REDIRECT_URL = "HomePage"
+
+LOGIN_URL = "login"

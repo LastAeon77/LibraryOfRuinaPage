@@ -2,7 +2,7 @@
 {% load static%}
 {% block content %}
 
-
+<div class = "has-text-centered">
 <h1>{{ character.Name }}</h1>
 <h3><a href="{% url 'lor:Office' slug=character.Page.Office.slug %}">{{character.Page.Office.Name}}</a></h3>
 {% if character.Page.Name %}
@@ -10,5 +10,5 @@
 {% endif %}
 <h4>{{character.Story}}</h4>
 <img src="{% static  character.ImgPath  %}" alt="{{character.Name}} Icon" />
-
+</div>
 {% endblock content %}

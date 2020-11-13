@@ -1,13 +1,14 @@
 {% extends "home/NavBarBase.html" %}
 {% load static%}
 {% block content %}
+<div class = "has-text-centered">
 
-<h1>List of Characters in Library of Ruina</h1>
+<h1 class="is-size-1">List of Characters in Library of Ruina</h1>
 
 {% for offcs in offc %}
 <ul>
-    <h2>{{offcs.Name}}: <img src="{% static  offcs.ImgPath  %}" alt="{{offcs.Name}} Icon" height=30px, width=30px />
-    </h2>
+    <h2 class="is-size-5 has-text-warning-dark">{{offcs.Name}}: <img src="{% static  offcs.ImgPath  %}" alt="{{offcs.Name}} Icon" height=30px, width=30px />
+    </h2> 
     {% for char in chars %}
     {% if char.Page.Office_id == offcs.id %}
     <li><a href="{% url 'lor:Char' slug=char.slug %}">{{char.Name}}</a></li>
@@ -21,5 +22,5 @@
     <li><a href="{% url 'lor:Char' slug=char.slug %}">{{char.Name}}</a></li>
     {% endfor %}
 </ul>
-
+</div>
 {% endblock content %}

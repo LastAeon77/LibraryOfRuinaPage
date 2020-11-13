@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as laz
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.conf import settings
 
 
 class Rank(models.Model):
@@ -144,7 +145,10 @@ class Card(models.Model):
 
 class Deck(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    creator = models.CharField(max_length=100)
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
     description = models.CharField(max_length=400)
     cards = models.ManyToManyField(Card, through="RelDeck")
 

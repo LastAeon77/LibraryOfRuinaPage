@@ -1,6 +1,7 @@
 {% extends "home/NavBarBase.html" %}
 {% load static%}
 {% block content %}
+<div class = "has-text-centered">
 
 <h1>This is the homepage</h1>
 
@@ -12,5 +13,6 @@
     <li><a href="{% url 'lor:CharHome'%}">Study Characters!</a></li>
     <li><a href="{% url 'lor:PageHome'%}">Study Pages!</a></li>
 </ul>
+</div>
 
 {% endblock content %}

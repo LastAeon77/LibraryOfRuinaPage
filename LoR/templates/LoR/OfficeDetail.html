@@ -1,10 +1,13 @@
 {% extends "home/NavBarBase.html" %}
 {% load static %}
 {% block content %}
+<div class = "has-text-centered">
 
-<h1>{{ office.Name }}</h1>
+<h1 class = "is-size-1">{{ office.Name }}</h1>
 
-<h2>{{office.Info}}</h2>
+<h2 class = "is-size-3">{{office.Info}}</h2>
 <img src="{% static  office.ImgPath  %}" alt="{{office.Name}} Icon" />
+</div>
+
 
 {% endblock content %}

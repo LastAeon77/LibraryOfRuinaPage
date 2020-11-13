@@ -82,7 +82,7 @@ def deck_maker_form(request):
             form = DeckMakerForm(request.POST)
             if form.is_valid():
                 name = form.cleaned_data["deck_name"]
-                creator = request.user.username
+                creator = request.user
                 desc = form.cleaned_data["deck_description"]
                 card1 = form.cleaned_data["card_1"]
                 card2 = form.cleaned_data["card_2"]
