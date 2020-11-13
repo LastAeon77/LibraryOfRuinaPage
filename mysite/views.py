@@ -7,3 +7,7 @@ def HomePage(request):
 
 def TestBase(request):
     return render(request, "home/NavBarBase.html")
+
+
+def AboutAndCredits(request):
+    return render(request, "home/AboutAndCredits.html")
