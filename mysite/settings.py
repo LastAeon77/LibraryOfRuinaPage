@@ -23,7 +23,8 @@ with open("resources/settings.json", "r") as f:
     key = json.load(f)
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = key["django"]["Secret_key"]
+# SECRET_KEY = key["django"]["Secret_key"]
+SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -90,12 +91,20 @@ DATABASES = {
     # "OPTIONS": {
     #     "init_command": "SET foreign_key_checks = 0;",
     # },
+    # "default": {
+    #     "ENGINE": "django.db.backends.postgresql_psycopg2",
+    #     "NAME": key["Database"]["NAME"],
+    #     "USER": "postgres",
+    #     "PASSWORD": key["Database"]["passing"],
+    #     "HOST": key["Database"]["HOST"],
+    #     "PORT": "5432",
+    # }
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": key["Database"]["NAME"],
+        "NAME": os.environ.get('NAME')
         "USER": "postgres",
-        "PASSWORD": key["Database"]["passing"],
-        "HOST": key["Database"]["HOST"],
+        "PASSWORD": os.environ.get('passing'),
+        "HOST": os.environ.get('HOST')
         "PORT": "5432",
     }
 }
