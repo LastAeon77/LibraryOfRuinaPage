@@ -3,9 +3,13 @@
 {% block content %}
 <div class = "has-text-centered">
 
-<h1 class="is-size-1 has-text-warning-dark">Welcome to AeonMoon</h1>
-<p>A hub for games that Last Aeon enjoys, hope you have a pleasent visit</p>
-<a href="{% url 'lor:Home'%}">Library Of Ruina Site</a>
+<h1 class="is-size-1 has-text-warning-dark has-text-weight-bold">Welcome to AeonMoon</h1>
+<p class = "is-size-2">A hub for games that Last Aeon enjoys, hope you have a pleasent visit</p>
+<button class="button is-medium is-danger is-light">
+    <a class = "is-size-3" href="{% url 'lor:Home'%}">
+        <strong class="has-text-black">Library Of Ruina Site</strong>
+    </a>
+</button>
 
 </div>
 {% endblock content %}
