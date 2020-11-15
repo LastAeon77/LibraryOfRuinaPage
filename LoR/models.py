@@ -144,7 +144,7 @@ class Card(models.Model):
 
 
 class Deck(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=20, unique=True)
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

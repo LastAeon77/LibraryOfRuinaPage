@@ -122,9 +122,19 @@ def deck_maker_form(request):
 
 
 def deckView(request, pk):
-    deckCards = RelDeck.objects.filter(deck_id=pk)
+    deckCards = RelDeck.objects.filter(deck_id=pk).order_by("card_id__Cost")
     deck = Deck.objects.filter(id=pk)
-    context = {"deck": deck[0], "deckCards": deckCards}
+    cost = 0.0
+    for cards in deckCards:
+        for i in range(cards.card_count):
+            cost += cards.card_id.Cost
+
+    avgCost = cost / 9
+    avgCost = avgCost * 100
+    avgCost = int(avgCost)
+    avgCost = avgCost/100
+
+    context = {"deck": deck[0], "deckCards": deckCards, "avgCost": avgCost}
     return render(request, "LoR/deckView.html", context)
 
 

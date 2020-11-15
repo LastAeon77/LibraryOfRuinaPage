@@ -1,16 +1,28 @@
 {% extends "home/NavBarBase.html" %}
 {% load static %}
 {% block content %}
-<div class = "has-text-centered">
+<div class="has-text-centered">
 
-<h1>{{ deck.name }}</h1>
-<p>Created By: {{deck.creator}}</p>
-<p>Use Case: {{deck.description}}</p>
-<ul>
-    {%for cards in deckCards%}
-    <li>{{cards.card_id}} x{{cards.card_count}}</li>
-    {% endfor %}
-</ul>
+    <h1 class ="is-size-1 has-text-light">{{ deck.name }}</h1>
+    <p class ="is-size-3 has-text-primary">Created By: {{deck.creator}}</p>
+    <p class ="is-size-4 has-text-primary-dark">Average Cost: {{avgCost}}</p>
+    <p class ="is-size-5 has-text-warning-dark">Use Case: {{deck.description}}</p>
+    <ul>
+        {%for cards in deckCards%}
+        <li>{{cards.card_id}} x{{cards.card_count}}</li>
+        {% endfor %}
+    </ul>
+    <div class="container">
+        {%for cardie in deckCards%}
+        {% with ''|center:cardie.card_count as range %}
+        {% for _ in range %}
+        <img class="deckResize" src="{% static  cardie.card_id.ImgPath %}" alt="{{cardie.card_id}} Icon" />
+        {% endfor %}
+        {% endwith %}
+        {% endfor %}
+
+
+    </div>
 </div>
 
 {% endblock content %}
