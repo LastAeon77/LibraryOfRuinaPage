@@ -13,8 +13,8 @@
     </tr>
     </thead>
     {% for decks in deckie %}
-    <tr>
-        <td class="notification has-background-grey"><a href="{% url 'lor:Deck' pk=decks.pk %}">{{decks.name}}</a></td>
+    <tr class="notification has-background-grey-light">
+        <td><a href="{% url 'lor:Deck' pk=decks.pk %}">{{decks.name}}</a></td>
         <td>{{decks.creator}}</td>
         <td>{{decks.id}}</td>
     </tr>
