@@ -7,7 +7,7 @@ from django.conf import settings
 class Rank(models.Model):
     Name = models.CharField(max_length=30, unique=True)
     Slogan = models.CharField(max_length=200)
-    Description = models.TextField(max_length=30)
+    Description = models.TextField()
     ImgPath = models.CharField(max_length=300)
     slug = models.SlugField(null=True)
 
