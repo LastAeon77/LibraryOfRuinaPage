@@ -3,13 +3,15 @@
 {% block content %}
 
 
-<div class = "has-text-centered">
+<div class="has-text-centered">
 
 
-<h1 class = "is-size-2">{{ page.Name }}</h1>
-<h3>{{page.Office.Name}}</h3>
-<h3>Story: </h3>
-<p>{{page.Story}}</p>
+    <h1 class="is-size-2">{{ page.Name }}</h1>
+    <h3>{{page.Office.Name}}</h3>
+    <h3>Story: </h3>
+    {% for lines in page.story_as_list %}
+    <p>{{lines}}</p>
+    {% endfor %}
 </div>
 
 {% endblock content %}

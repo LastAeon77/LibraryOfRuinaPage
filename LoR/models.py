@@ -60,6 +60,10 @@ class Page(models.Model):
     def __str__(self):
         return self.Name
 
+    def story_as_list(self):
+        return self.Story.splitlines()
+    
+
 
 class Character(models.Model):
     Name = models.CharField(max_length=100, unique=True)
@@ -155,6 +159,9 @@ class Deck(models.Model):
 
     def __str__(self):
         return self.name
+
+    def description_as_list(self):
+        return self.description.splitlines()
 
 
 class RelDeck(models.Model):

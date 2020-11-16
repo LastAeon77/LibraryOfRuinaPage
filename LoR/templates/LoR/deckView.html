@@ -6,7 +6,10 @@
     <h1 class ="is-size-1 has-text-light">{{ deck.name }}</h1>
     <p class ="is-size-3 has-text-primary">Created By: {{deck.creator}}</p>
     <p class ="is-size-4 has-text-primary-dark">Average Cost: {{avgCost}}</p>
-    <p class ="is-size-5 has-text-warning-dark">Use Case: {{deck.description}}</p>
+    <p class="is-size-5">Use Case: </p>
+    {% for lines in deck.description_as_list %}
+    <p class ="is-size-5 has-text-warning-dark">{{lines}}</p>
+    {% endfor %}
     <ul>
         {%for cards in deckCards%}
         <li>{{cards.card_id}} x{{cards.card_count}}</li>
