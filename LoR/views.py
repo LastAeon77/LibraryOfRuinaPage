@@ -171,7 +171,7 @@ def guide_maker_form(request):
         else:
             form = GuideMakerForm()
         context = {"form": form}
-        return render(request, "LoR/guideMakingform.html", context)
+        return render(request, "LoR/guideMakingForm.html", context)
     else:
         return HttpResponseRedirect(reverse("register"))
 
