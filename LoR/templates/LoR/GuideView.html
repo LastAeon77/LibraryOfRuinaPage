@@ -2,17 +2,20 @@
 {% load static %}
 {% block content %}
 
-<h1 class ="is-size-1 has-text-light">{{ guide.name }}</h1>
-<p class ="is-size-3 has-text-primary">Created By: {{guide.creator}}</p>
-<p class ="is-size-4 has-text-primary-dark">Description: {{guide.description}}</p>
-<p class ="is-size-4 has-text-primary-dark">Reccomended Floor: {{guide.Recc_Floor}}</p>
-
-<ul>
+<h1 class="is-size-1 has-text-light">{{ guide.name }}</h1>
+<p class="is-size-3 has-text-primary">Created By: {{guide.creator}}</p>
+<p class="is-size-4 has-text-primary-dark">Floor: {{guide.Recc_Floor}}</p>
+<p class="is-size-4">List of Decks: </p>
+<ul class = "is-link is-size-4">
     {% for decks in guideDecks %}
-    <li><a href = "{% url 'lor:Deck' pk=decks.deck_id.pk %}">{{decks.deck_id}}</a> x{{decks.deck_count}}</li>
+    <li><a href="{% url 'lor:Deck' pk=decks.deck_id.pk %}">{{decks.deck_id}}</a> x{{decks.deck_count}}</li>
     {% endfor %}
 </ul>
-
+<br>
+<p class="has-text-warning-dark is-size-5">Description: </p>
+{% for lines in guide.description_as_list %}
+<p class="has-text-warning-dark is-size-5">{{lines}}</p>
+{% endfor %}
 
 
 {% endblock content %}

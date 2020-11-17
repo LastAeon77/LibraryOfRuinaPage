@@ -163,7 +163,7 @@ class Card(models.Model):
 
 
 class Deck(models.Model):
-    name = models.CharField(max_length=20, unique=True)
+    name = models.CharField(max_length=50, unique=True)
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
     )
@@ -198,7 +198,7 @@ class RelDeck(models.Model):
 
 
 class Guide(models.Model):
-    name = models.CharField(max_length=20, unique=True)
+    name = models.CharField(max_length=50, unique=True)
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
     )
@@ -210,6 +210,9 @@ class Guide(models.Model):
 
     def __str__(self):
         return self.name
+
+    def description_as_list(self):
+        return self.description.splitlines()
 
 
 class RelGuide(models.Model):

@@ -6,7 +6,9 @@ import collections
 
 
 class GuideMakerForm(forms.Form):
-    guide_name = forms.CharField(max_length=100)
+    guide_name = forms.CharField(
+        max_length=50, help_text="Please keep characters below 50!"
+    )
     guide_description = forms.CharField(widget=forms.Textarea)
     floor = forms.ModelChoiceField(
         queryset=Office.objects.all().filter(Rank=7),
@@ -29,9 +31,11 @@ class GuideMakerForm(forms.Form):
 
     def clean(self):
         N = self.cleaned_data.get("deck_name")
-        N = Deck.objects.filter(name=N)
-        if N:
+        J = Deck.objects.filter(name=N)
+        if J:
             raise forms.ValidationError("That name is taken!")
+        if len(str(N)) > 50:
+            raise forms.ValidationError("Your name is too long!")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -51,7 +55,7 @@ class GuideMakerForm(forms.Form):
 
 
 class DeckMakerForm(forms.Form):
-    deck_name = forms.CharField(max_length=100)
+    deck_name = forms.CharField(max_length=50)
     deck_description = forms.CharField(widget=forms.Textarea)
     Reccomended_Floor = forms.ModelChoiceField(
         queryset=Office.objects.all().filter(Rank=7),
@@ -93,9 +97,11 @@ class DeckMakerForm(forms.Form):
 
     def clean(self):
         N = self.cleaned_data.get("deck_name")
-        N = Deck.objects.filter(name=N)
-        if N:
+        J = Deck.objects.filter(name=N)
+        if J:
             raise forms.ValidationError("That name is taken!")
+        if len(str(N)) > 50:
+            raise forms.ValidationError("Your name is too long!")
         cards1 = self.cleaned_data.get("card_1")
         cards2 = self.cleaned_data.get("card_2")
         cards3 = self.cleaned_data.get("card_3")
