@@ -7,6 +7,7 @@ from .models import (
     Deck,
     Page,
     Character,
+    RelDeck
 )
 
 
@@ -15,6 +16,7 @@ admin.site.register(Rank)
 admin.site.register(Deck)
 admin.site.register(Page)
 admin.site.register(Character)
+admin.site.register(RelDeck)
 
 
 class CardAdmin(admin.ModelAdmin):
