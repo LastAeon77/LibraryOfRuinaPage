@@ -28,9 +28,6 @@
 
     <div id="navbarBasicExample" class="navbar-menu ">
       <div class="navbar-start ">
-        <a href="{% url 'lor:Home' %}" class=" navbar-item has-text-link-light">
-          Home
-        </a>
         <a href="{% url 'About' %}" class=" navbar-item has-text-link-light">
           About
         </a>
@@ -42,6 +39,9 @@
         </a>
         <a href="{% url 'lor:DeckHome' %}" class="navbar-item has-text-link-light">
           Deck List
+        </a>
+        <a href="{% url 'lor:GuideHome' %}" class="navbar-item has-text-link-light">
+          Guide List
         </a>
         <a href="{% url 'lor:PageHome' %}" class="navbar-item has-text-link-light">
           Pages
@@ -55,6 +55,9 @@
           <div class="navbar-dropdown">
             <a href="{% url 'lor:DeckAdd' %}" class="navbar-item">
               Make a Deck
+            </a>
+            <a href="{% url 'lor:GuideAdd' %}" class="navbar-item">
+              Make a Guide
             </a>
             <a href="{% url 'lor:CharHome' %}" class="navbar-item">
               Characters (Beta)
