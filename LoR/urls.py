@@ -17,6 +17,9 @@ urlpatterns = [
     path("character", views.CharacterList, name="CharHome"),
     path("page/<slug:slug>", views.PageView.as_view(), name="Page"),
     path("page", views.PageList, name="PageHome"),
+    path("guide/<int:pk>", views.GuideView, name="Guide"),
+    path("guide", views.guideHomeView.as_view(), name="GuideHome"),
+    path("guide/add", views.guide_maker_form, name="GuideAdd"),
 
 
 ] + staticfiles_urlpatterns()

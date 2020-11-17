@@ -1,8 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
-from .models import Office, Rank, Card, Deck, RelDeck, Page, Character
-from .forms import DeckMakerForm
+from .models import Office, Rank, Card, Deck, RelDeck, Page, Character, Guide, RelGuide
+from .forms import DeckMakerForm, GuideMakerForm
 from django.urls import reverse
 import collections
 from django.contrib.auth.decorators import login_required
@@ -84,6 +84,8 @@ def deck_maker_form(request):
                 name = form.cleaned_data["deck_name"]
                 creator = request.user
                 desc = form.cleaned_data["deck_description"]
+                recc_floor = form.cleaned_data["Reccomended_Floor"]
+                recc_page = form.cleaned_data["Reccomended_Page"]
                 card1 = form.cleaned_data["card_1"]
                 card2 = form.cleaned_data["card_2"]
                 card3 = form.cleaned_data["card_3"]
@@ -105,7 +107,13 @@ def deck_maker_form(request):
                     card9,
                 ]
                 y = collections.Counter(list_of_card)
-                q = Deck(name=name, creator=creator, description=desc)
+                q = Deck(
+                    name=name,
+                    creator=creator,
+                    description=desc,
+                    Recc_Floor=recc_floor,
+                    Recc_Page=recc_page,
+                )
                 q.save()
                 for cards in y:
                     q.cards.add(cards, through_defaults={"card_count": y[cards]})
@@ -121,6 +129,65 @@ def deck_maker_form(request):
         return HttpResponseRedirect(reverse("register"))
 
 
+@login_required
+def guide_maker_form(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = GuideMakerForm(request.POST)
+            if form.is_valid():
+                name = form.cleaned_data["guide_name"]
+                creator = request.user
+                desc = form.cleaned_data["guide_description"]
+                recc_floor = form.cleaned_data["floor"]
+                deck1 = form.cleaned_data["deck_1"]
+                deck2 = form.cleaned_data["deck_2"]
+                deck3 = form.cleaned_data["deck_3"]
+                deck4 = form.cleaned_data["deck_4"]
+                deck5 = form.cleaned_data["deck_5"]
+
+                list_of_decks = [
+                    deck1,
+                    deck2,
+                    deck3,
+                    deck4,
+                    deck5,
+                ]
+                y = collections.Counter(list_of_decks)
+                q = Guide(
+                    name=name,
+                    creator=creator,
+                    description=desc,
+                    Recc_Floor=recc_floor,
+                )
+                q.save()
+                for decks in y:
+                    q.required_decks.add(
+                        decks, through_defaults={"deck_count": y[decks]}
+                    )
+                q.save()
+                # form.save()
+                return HttpResponseRedirect(reverse("lor:Guide", args=(q.id,)))
+
+        else:
+            form = GuideMakerForm()
+        context = {"form": form}
+        return render(request, "LoR/guideMakingform.html", context)
+    else:
+        return HttpResponseRedirect(reverse("register"))
+
+
+def GuideView(request, pk):
+    guideDecks = RelGuide.objects.filter(guide_id=pk).order_by("deck_id")
+    guide = Guide.objects.filter(id=pk)
+    context = {"guide": guide[0], "guideDecks": guideDecks}
+    return render(request, "LoR/GuideView.html", context)
+
+
+class guideHomeView(generic.ListView):
+    model = Guide
+    template_name = "LoR/GuideHome.html"
+
+
 def deckView(request, pk):
     deckCards = RelDeck.objects.filter(deck_id=pk).order_by("card_id__Cost")
     deck = Deck.objects.filter(id=pk)
@@ -132,7 +199,7 @@ def deckView(request, pk):
     avgCost = cost / 9
     avgCost = avgCost * 100
     avgCost = int(avgCost)
-    avgCost = avgCost/100
+    avgCost = avgCost / 100
 
     context = {"deck": deck[0], "deckCards": deckCards, "avgCost": avgCost}
     return render(request, "LoR/deckView.html", context)

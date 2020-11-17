@@ -1,14 +1,6 @@
 from django.contrib import admin
 from .models import Card
-from .models import (
-    Card,
-    Office,
-    Rank,
-    Deck,
-    Page,
-    Character,
-    RelDeck
-)
+from .models import Card, Office, Rank, Deck, Page, Character, RelDeck, Guide
 
 
 admin.site.register(Office)
@@ -17,6 +9,7 @@ admin.site.register(Deck)
 admin.site.register(Page)
 admin.site.register(Character)
 admin.site.register(RelDeck)
+admin.site.register(Guide)
 
 
 class CardAdmin(admin.ModelAdmin):

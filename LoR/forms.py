@@ -1,48 +1,95 @@
 from django import forms
-from .models import Card, Deck
+from .models import Card, Deck, Office, Page, Guide
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
 import collections
 
-# class DeckMakerForm(forms.ModelForm):
-#     class Meta:
-#         model = Deck
-#         fields = "__all__"
 
-#     def clean(self):
-#         cards = self.cleaned_data.get("cards")
-#         if cards and cards.count() > 9:
-#             raise forms.ValidationError("Maximum 9 Cards are allowed.")
+class GuideMakerForm(forms.Form):
+    guide_name = forms.CharField(max_length=100)
+    guide_description = forms.CharField(widget=forms.Textarea)
+    floor = forms.ModelChoiceField(
+        queryset=Office.objects.all().filter(Rank=7),
+    )
+    deck_1 = forms.ModelChoiceField(
+        queryset=Deck.objects.all().order_by("name"),
+    )
+    deck_2 = forms.ModelChoiceField(
+        queryset=Deck.objects.all().order_by("name"),
+    )
+    deck_3 = forms.ModelChoiceField(
+        queryset=Deck.objects.all().order_by("name"),
+    )
+    deck_4 = forms.ModelChoiceField(
+        queryset=Deck.objects.all().order_by("name"),
+    )
+    deck_5 = forms.ModelChoiceField(
+        queryset=Deck.objects.all().order_by("name"),
+    )
 
-#         elif cards and cards.count() < 9:
-#             raise forms.ValidationError("You need at least 9 cards to proceed!")
-#         return self.cleaned_data
+    def clean(self):
+        N = self.cleaned_data.get("deck_name")
+        N = Deck.objects.filter(name=N)
+        if N:
+            raise forms.ValidationError("That name is taken!")
 
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.helper = FormHelper
-#         self.helper.form_method = "post"
-
-#     cards = forms.ModelMultipleChoiceField(
-#         queryset=Card.objects.all(),
-#         widget=forms.CheckboxSelectMultiple
-#     )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper
+        self.helper.form_method = "post"
+        self.helper.layout = Layout(
+            "guide_name",
+            "guide_description",
+            "floor",
+            "deck_1",
+            "deck_2",
+            "deck_3",
+            "deck_4",
+            "deck_5",
+            Submit("submit", "Submit", css_class="btn-success"),
+        )
 
 
 class DeckMakerForm(forms.Form):
     deck_name = forms.CharField(max_length=100)
-    deck_description = forms.CharField(max_length=400, widget=forms.Textarea)
+    deck_description = forms.CharField(widget=forms.Textarea)
+    Reccomended_Floor = forms.ModelChoiceField(
+        queryset=Office.objects.all().filter(Rank=7),
+        required=False,
+        help_text="You can leave this blank",
+    )
+    Reccomended_Page = forms.ModelChoiceField(
+        queryset=Page.objects.all(),
+        required=False,
+        help_text="You can leave this blank",
+    )
     card_1 = forms.ModelChoiceField(
         queryset=Card.objects.all().order_by("Name"),
     )
-    card_2 = forms.ModelChoiceField(queryset=Card.objects.all().order_by("Name"))
-    card_3 = forms.ModelChoiceField(queryset=Card.objects.all().order_by("Name"))
-    card_4 = forms.ModelChoiceField(queryset=Card.objects.all().order_by("Name"))
-    card_5 = forms.ModelChoiceField(queryset=Card.objects.all().order_by("Name"))
-    card_6 = forms.ModelChoiceField(queryset=Card.objects.all().order_by("Name"))
-    card_7 = forms.ModelChoiceField(queryset=Card.objects.all().order_by("Name"))
-    card_8 = forms.ModelChoiceField(queryset=Card.objects.all().order_by("Name"))
-    card_9 = forms.ModelChoiceField(queryset=Card.objects.all().order_by("Name"))
+    card_2 = forms.ModelChoiceField(
+        queryset=Card.objects.all().order_by("Name"),
+    )
+    card_3 = forms.ModelChoiceField(
+        queryset=Card.objects.all().order_by("Name"),
+    )
+    card_4 = forms.ModelChoiceField(
+        queryset=Card.objects.all().order_by("Name"),
+    )
+    card_5 = forms.ModelChoiceField(
+        queryset=Card.objects.all().order_by("Name"),
+    )
+    card_6 = forms.ModelChoiceField(
+        queryset=Card.objects.all().order_by("Name"),
+    )
+    card_7 = forms.ModelChoiceField(
+        queryset=Card.objects.all().order_by("Name"),
+    )
+    card_8 = forms.ModelChoiceField(
+        queryset=Card.objects.all().order_by("Name"),
+    )
+    card_9 = forms.ModelChoiceField(
+        queryset=Card.objects.all().order_by("Name"),
+    )
 
     def clean(self):
         N = self.cleaned_data.get("deck_name")
@@ -84,6 +131,8 @@ class DeckMakerForm(forms.Form):
         self.helper.layout = Layout(
             "deck_name",
             "deck_description",
+            "Reccomended_Floor",
+            "Reccomended_Page",
             "card_1",
             "card_2",
             "card_3",

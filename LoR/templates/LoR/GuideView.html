@@ -1,0 +1,18 @@
+{% extends "home/NavBarBase.html" %}
+{% load static %}
+{% block content %}
+
+<h1 class ="is-size-1 has-text-light">{{ guide.name }}</h1>
+<p class ="is-size-3 has-text-primary">Created By: {{guide.creator}}</p>
+<p class ="is-size-4 has-text-primary-dark">Description: {{guide.description}}</p>
+<p class ="is-size-4 has-text-primary-dark">Reccomended Floor: {{guide.Recc_Floor}}</p>
+
+<ul>
+    {% for decks in guideDecks %}
+    <li><a href = "{% url 'lor:Deck' pk=decks.deck_id.pk %}">{{decks.deck_id}}</a> x{{decks.deck_count}}</li>
+    {% endfor %}
+</ul>
+
+
+
+{% endblock content %}

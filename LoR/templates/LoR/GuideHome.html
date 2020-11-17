@@ -1,0 +1,27 @@
+{% extends "home/NavBarBase.html" %}
+{% load static%}
+{% block content %}
+
+
+<h1 class ="is-size-1">List of Guides</h1>
+<table class="table is-bordered is-fullwidth is-striped has-background-grey">
+    <thead>
+    <tr>
+        <th>Guide Name</th>
+        <th>Creator</th>
+        <th>Floor</th>
+        <th>Id</th>
+    </tr>
+    </thead>
+    {% for guides in guide_list %}
+    <tr class="notification has-background-grey-light">
+        <td><a href="{% url 'lor:Guide' pk=guides.pk %}">{{guides.name}}</a></td>
+        <td>{{guides.creator}}</td>
+        <td>{{guides.Recc_Floor}}</td>
+        <td>{{guides.id}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock content %}

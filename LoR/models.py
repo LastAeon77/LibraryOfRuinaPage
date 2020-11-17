@@ -62,7 +62,6 @@ class Page(models.Model):
 
     def story_as_list(self):
         return self.Story.splitlines()
-    
 
 
 class Character(models.Model):
@@ -121,22 +120,38 @@ class Card(models.Model):
     )
 
     Type1 = models.CharField(
-        max_length=2, choices=Types.choices, null=True, blank=True, default=None
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
     )
     Roll2 = models.CharField(max_length=10, null=True, blank=True)
     Eff2 = models.CharField(max_length=200, null=True, blank=True)
     Type2 = models.CharField(
-        max_length=2, choices=Types.choices, null=True, blank=True, default=None
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
     )
     Roll3 = models.CharField(max_length=10, null=True, blank=True)
     Eff3 = models.CharField(max_length=200, null=True, blank=True)
     Type3 = models.CharField(
-        max_length=2, choices=Types.choices, null=True, blank=True, default=None
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
     )
     Roll4 = models.CharField(max_length=10, null=True, blank=True)
     Eff4 = models.CharField(max_length=200, null=True, blank=True)
     Type4 = models.CharField(
-        max_length=2, choices=Types.choices, null=True, blank=True, default=None
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
     )
     slug = models.SlugField(null=True)
 
@@ -150,12 +165,19 @@ class Card(models.Model):
 class Deck(models.Model):
     name = models.CharField(max_length=20, unique=True)
     creator = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        null=True
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
     )
-    description = models.CharField(max_length=400)
+    description = models.TextField()
     cards = models.ManyToManyField(Card, through="RelDeck")
+    Recc_Floor = models.ForeignKey(
+        Office, on_delete=models.CASCADE, null=True, blank=True
+    )
+    Recc_Page = models.ForeignKey(
+        Page,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return self.name
@@ -173,3 +195,29 @@ class RelDeck(models.Model):
 
     def __str__(self):
         return self.deck_id.name
+
+
+class Guide(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True
+    )
+    description = models.TextField()
+    Recc_Floor = models.ForeignKey(
+        Office, on_delete=models.CASCADE, null=True, blank=True
+    )
+    required_decks = models.ManyToManyField(Deck, through="RelGuide")
+
+    def __str__(self):
+        return self.name
+
+
+class RelGuide(models.Model):
+    guide_id = models.ForeignKey(Guide, on_delete=models.CASCADE)
+    deck_id = models.ForeignKey(Deck, on_delete=models.CASCADE)
+    deck_count = models.IntegerField(
+        validators=[MaxValueValidator(6), MinValueValidator(0)]
+    )
+
+    def __str__(self):
+        return self.guide_id.name
