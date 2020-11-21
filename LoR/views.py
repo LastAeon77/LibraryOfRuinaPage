@@ -115,6 +115,15 @@ def deck_maker_form(request):
                     Recc_Page=recc_page,
                 )
                 q.save()
+                eff_1 = form.cleaned_data["eff_1"]
+                eff_2 = form.cleaned_data["eff_2"]
+                eff_3 = form.cleaned_data["eff_3"]
+                eff_4 = form.cleaned_data["eff_4"]
+
+                eff_list = [eff_1, eff_2, eff_3, eff_4]
+                eff_list = list(dict.fromkeys(eff_list))
+                for effs in eff_list:
+                    q.effect.add(effs)
                 for cards in y:
                     q.cards.add(cards, through_defaults={"card_count": y[cards]})
                 q.save()

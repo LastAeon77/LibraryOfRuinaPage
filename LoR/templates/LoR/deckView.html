@@ -3,20 +3,29 @@
 {% block content %}
 <div class="has-text-centered">
 
-    <h1 class ="is-size-1 has-text-light">{{ deck.name }}</h1>
-    <p class ="is-size-3 has-text-primary">Created By: {{deck.creator}}</p>
-    <p class ="is-size-4 has-text-primary-dark">Average Cost: {{avgCost}}</p>
+    <h1 class="is-size-1 has-text-light">{{ deck.name }}</h1>
+    <p class="is-size-3 has-text-primary">Created By: {{deck.creator}}</p>
+    <p class="is-size-4 has-text-primary-dark">Average Cost: {{avgCost}}</p>
     {% if deck.Recc_Floor%}
-    <p class ="is-size-4 has-text-warning-light">Recommended Floor: {{deck.Recc_Floor}}</p>
+    <p class="is-size-5 has-text-warning-light">Recommended Floor: {{deck.Recc_Floor}}</p>
     {% endif %}
     {% if deck.Recc_Page%}
-    <p class ="is-size-4 has-text-warning-light">Recommended Page: {{deck.Recc_Page}}</p>
+    <p class="is-size-5 has-text-warning-light">Recommended Page: {{deck.Recc_Page}}</p>
     {% endif %}
-    
-    <p class="is-size-5">Use Case: </p>
+    <br>
+    <p class="is-size-4 has-text-warning">Effects: </p>
+    <ul>
+        {% for effs in deck.effect.all %}
+        <li class = "has-text-primary">{{effs}}</li>
+        {% endfor %}
+    </ul>
+    <br>
+    <p class="is-size-5 has-text-warning">Use Case: </p>
     {% for lines in deck.description_as_list %}
-    <p class ="has-text-warning-dark">{{lines}}</p>
+    <p class="has-text-warning-dark">{{lines}}</p>
     {% endfor %}
+    <br>
+    <p class="is-size-5 has-text-warning">Cards: </p>
     <ul>
         {%for cards in deckCards%}
         <li>{{cards.card_id}} x{{cards.card_count}}</li>

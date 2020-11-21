@@ -32,7 +32,7 @@ class Effects(models.Model):
     InGameId = models.IntegerField(unique=True)
 
     def __str__(self):
-        return self.Name
+        return f"{self.Name}: {self.Description}"
 
 
 class Page(models.Model):
@@ -178,6 +178,7 @@ class Deck(models.Model):
         null=True,
         blank=True,
     )
+    effect = models.ManyToManyField(Effects)
 
     def __str__(self):
         return self.name

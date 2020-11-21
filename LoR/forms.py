@@ -1,5 +1,5 @@
 from django import forms
-from .models import Card, Deck, Office, Page, Guide
+from .models import Card, Deck, Office, Page, Effects
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
 import collections
@@ -94,8 +94,29 @@ class DeckMakerForm(forms.Form):
     card_9 = forms.ModelChoiceField(
         queryset=Card.objects.all().order_by("Name"),
     )
+    eff_1 = forms.ModelChoiceField(
+        queryset=Effects.objects.all().order_by("Name"),
+        required=False,
+        help_text="Make sure this is unique!",
+    )
+    eff_2 = forms.ModelChoiceField(
+        queryset=Effects.objects.all().order_by("Name"),
+        required=False,
+        help_text="Make sure this is unique!",
+    )
+    eff_3 = forms.ModelChoiceField(
+        queryset=Effects.objects.all().order_by("Name"),
+        required=False,
+        help_text="Make sure this is unique!",
+    )
+    eff_4 = forms.ModelChoiceField(
+        queryset=Effects.objects.all().order_by("Name"),
+        required=False,
+        help_text="Make sure this is unique!",
+    )
 
     def clean(self):
+
         N = self.cleaned_data.get("deck_name")
         J = Deck.objects.filter(name=N)
         if J:
@@ -148,5 +169,9 @@ class DeckMakerForm(forms.Form):
             "card_7",
             "card_8",
             "card_9",
+            "eff_1",
+            "eff_2",
+            "eff_3",
+            "eff_4",
             Submit("submit", "Submit", css_class="btn-success"),
         )
