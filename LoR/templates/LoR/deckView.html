@@ -35,7 +35,7 @@
         {%for cardie in deckCards%}
         {% with ''|center:cardie.card_count as range %}
         {% for _ in range %}
-        <img src="{% static  cardie.card_id.ImgPath %}" alt="{{cardie.card_id}} Icon" />
+        <img src="{% static  cardie.card_id.ImgPath %}" height="310" width="410" alt="{{cardie.card_id}} Icon" />
         {% endfor %}
         {% endwith %}
         {% endfor %}
