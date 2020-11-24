@@ -69,30 +69,39 @@ class DeckMakerForm(forms.Form):
     )
     card_1 = forms.ModelChoiceField(
         queryset=Card.objects.all().order_by("Name"),
+        required=True,
     )
     card_2 = forms.ModelChoiceField(
         queryset=Card.objects.all().order_by("Name"),
+        required=True,
     )
     card_3 = forms.ModelChoiceField(
         queryset=Card.objects.all().order_by("Name"),
+        required=True,
     )
     card_4 = forms.ModelChoiceField(
         queryset=Card.objects.all().order_by("Name"),
+        required=True,
     )
     card_5 = forms.ModelChoiceField(
         queryset=Card.objects.all().order_by("Name"),
+        required=True,
     )
     card_6 = forms.ModelChoiceField(
         queryset=Card.objects.all().order_by("Name"),
+        required=True,
     )
     card_7 = forms.ModelChoiceField(
         queryset=Card.objects.all().order_by("Name"),
+        required=True,
     )
     card_8 = forms.ModelChoiceField(
         queryset=Card.objects.all().order_by("Name"),
+        required=True,
     )
     card_9 = forms.ModelChoiceField(
         queryset=Card.objects.all().order_by("Name"),
+        required=True,
     )
     eff_1 = forms.ModelChoiceField(
         queryset=Effects.objects.all().order_by("Name"),

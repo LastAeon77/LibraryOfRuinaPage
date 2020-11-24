@@ -123,7 +123,8 @@ def deck_maker_form(request):
                 eff_list = [eff_1, eff_2, eff_3, eff_4]
                 eff_list = list(dict.fromkeys(eff_list))
                 for effs in eff_list:
-                    q.effect.add(effs)
+                    if effs is not None:
+                        q.effect.add(effs)
                 for cards in y:
                     q.cards.add(cards, through_defaults={"card_count": y[cards]})
                 q.save()
