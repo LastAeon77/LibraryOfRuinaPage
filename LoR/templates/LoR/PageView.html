@@ -6,9 +6,26 @@
 <div class="has-text-centered">
 
 
-    <h1 class="is-size-2">{{ page.Name }}</h1>
-    <h3>{{page.Office.Name}}</h3>
-    <h3>Story: </h3>
+    <h1 class="is-size-2 has-text-primary-light">{{ page.Name }}</h1>
+    <h3 class="is-size-5 has-text-primary">{{page.Office.Name}}</h3>
+    <p class="is-size-5 has-text-light">Rarity: {{page.get_Rarity_display}}</p>
+    <p class="is-size-5 has-text-success">HP: {{page.HP}}</p>
+    <p class="is-size-5 has-text-warning">Stagger: {{page.Stagger}}</p>
+    <p class = "is-size-5 has-text-danger-light">Speed: {{page.SpeedMin}} - {{page.Speed}}</p>
+    <p class="is-size-5 has-text-primary-light">Slash</p> 
+        <li><b class = "has-text-success">HP: {{page.SlashResist}}</b> <b class = "has-text-warning">Stagger: {{page.SlashStaggerResist}}</b></li>
+    <p class="is-size-5 has-text-primary-light">Pierce</p> 
+        <li><b class = "has-text-success">HP: {{page.PierceResist}}</b> <b class = "has-text-warning">Stagger: {{page.PierceStaggerResist}}</b></li>
+    <p class="is-size-5 has-text-primary-light">Blunt</p> 
+        <li><b class = "has-text-success">HP: {{page.BluntResist}}</b> <b class = "has-text-warning">Stagger: {{page.BluntStaggerResist}}</b></li>
+    <p class="is-size-5 has-text-danger">Type: {{page.RangeType}}</p>
+    <p class="is-size-5 has-text-warning-light">Effects: </p>
+    <ul class = "has-text-warning">
+    {% for effs in page.InitialEffects.all %}
+        <li>{{effs}}</li>
+    {%endfor%}
+    </ul>
+    <h3 class="is-size-5 has-text-primary-light">Story: </h3>
     {% for lines in page.story_as_list %}
     <p>{{lines}}</p>
     {% endfor %}
