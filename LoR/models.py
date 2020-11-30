@@ -56,6 +56,18 @@ class Page(models.Model):
     InitialEffects = models.ManyToManyField(Effects, blank=True)
     slug = models.SlugField(null=True)
     Office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
+    HP = models.IntegerField(blank=True, null=True)
+    Stagger = models.IntegerField(blank=True, null=True)
+    SpeedMin = models.IntegerField(blank=True, null=True)
+    Speed = models.IntegerField(blank=True, null=True)
+    SlashResist = models.CharField(max_length=100, default="Normal")
+    PierceResist = models.CharField(max_length=100, default="Normal")
+    BluntResist = models.CharField(max_length=100, default="Normal")
+    SlashStaggerResist = models.CharField(max_length=100, default="Normal")
+    PierceStaggerResist = models.CharField(max_length=100, default="Normal")
+    BluntStaggerResist = models.CharField(max_length=100, default="Normal")
+    RangeType = models.CharField(max_length=100, blank=True, null=True)
+    SpeedDiceNum = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.Name
