@@ -1,7 +1,13 @@
 {% extends "home/NavBarBase.html" %}
 {% block content %}
     <div class="content-section">
-      <h2 class="account-heading">{{ user.username }}</h2>
-      <p class="text-secondary">{{ user.email }}</p>
+      <h2 class="account-heading has-text-light">{{ user.username }}</h2>
+      <p class="text-secondary has-text-primary-light">{{ user.email }}</p>
     </div>
+    <ul>
+      {% for decks in deck%}
+        <li><a href="{% url 'lor:Deck' pk=decks.id %}">{{decks}}</a></li> 
+      {% endfor %}
+    </ul>
+    
 {% endblock content %}

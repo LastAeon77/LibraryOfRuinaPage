@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegistrationForm
 from django.contrib.auth.decorators import login_required
+from LoR.models import Deck
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView
 
 # Create your views here.
 
@@ -23,7 +26,14 @@ def register(request):
 
 @login_required
 def profile(request):
-    return render(request, "users/profile.html", {"user": request.user})
+    deck_data = Deck.objects.all().filter(creator=request.user.id)
+    context = {"user": request.user, "deck": deck_data}
+    return render(request, "users/profile.html", context)
+
+
+# class DeckDelete(DeleteView):
+#     model = Deck
+#     success_url = reverse_lazy("lor:DeckHome")
 
 
 # message.debug
