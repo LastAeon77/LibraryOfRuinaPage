@@ -1,11 +1,14 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views import generic
 from .models import Office, Rank, Card, Deck, RelDeck, Page, Character, Guide, RelGuide
 from .forms import DeckMakerForm, GuideMakerForm
 from django.urls import reverse
 import collections
 from django.contrib.auth.decorators import login_required
+from django.views import generic  # generic.DetailView and generic.ListView
+
+# DetailView will fetch a certain row through its unique id in url
+# ListView will fetch all rows of a Relation
 
 
 # Simple Homepage
@@ -13,13 +16,13 @@ def HomePage(request):
     return render(request, "LoR/LoRHomePage.html")
 
 
-# This is the homepage of offices, displays all Office
+# This is the homepage of offices, displays an Office id = pk
 class OfficeView(generic.DetailView):
     model = Office
     template_name = "LoR/OfficeDetail.html"
 
 
-# This is the homepage of Ranks, display all Ranks
+# This is the homepage of Ranks, display a Rank id = pk
 class RankView(generic.DetailView):
     model = Rank
     template_name = "LoR/RankDetail.html"
@@ -27,9 +30,10 @@ class RankView(generic.DetailView):
 
 # This is the Office Homepage
 def OfficeHomePage(request):
+    # Gets all Office
     Offc = Office.objects.all()
     # This is an example of a "Raw" SQL performed through django's embedded SQL
-    # It was the get a specific result I wanted
+    # Gets Rank id, Rank Name, number of Office in Rank, and the slug of Rank
     NumberOfOff = Office.objects.raw(
         """
 SELECT O."Rank_id" AS id, R."Name", COUNT(*) AS "rank_num", R."slug"
@@ -45,7 +49,7 @@ ORDER BY O."Rank_id"
 
 # This is the view for a Card
 def CardDetailView(request, slug):
-    # Get the details of the card we need though the slug
+    # Gets Card information, its Rank, its Office, its Rank Image Path, and its Office Image Path with corresponding slug
     pag = Card.objects.raw(
         f"""SELECT C.*, R."Name" AS "Rank", O."Name" AS "off",R."ImgPath" AS "RankImg", O."ImgPath" AS "OffImg"
 FROM "LoR_office" AS O , "LoR_card" AS C,"LoR_rank" AS R
@@ -57,8 +61,9 @@ WHERE R."id" = O."Rank_id" AND O."id" = C."Office_id" AND C."slug" = '{slug}'"""
 
 # This is a view for the list of all the cards
 def CardHomeView(request):
+    # Gets all Card Object
     Cards = Card.objects.all()
-    # Office is taken so that I can easily sort Cards by Offices
+    # Gets all Office id, Rank, Name, Number of Cards, Slug, and Image Path
     Offices = Card.objects.raw(
         """SELECT O."id",O."Rank_id",O."Name" AS "OfficeName",COUNT(*) AS "NumberOfCards", O."slug", O."ImgPath"
 FROM ("LoR_office" AS O INNER JOIN "LoR_card" AS C ON O."id" = C."Office_id")
@@ -67,7 +72,7 @@ ORDER BY O."id"
 """
     )
 
-    # Rank's Name, Count of offices in each Rank,
+    # Get all Rank Name, id, Number of Offices in Rank, slug, and image path.
 
     Ranks = Card.objects.raw(
         """SELECT R.id AS id,R."Name" AS RankName,COUNT(*) AS "NumberOfOffices", R."slug",R."ImgPath"
@@ -236,7 +241,7 @@ def deckView(request, pk):
 
 # This is the page for List of decks
 def deckHomeView(request):
-    # Get a simple list of decks
+    # Gets all decks
     deckie = Deck.objects.all()
     context = {"deckie": deckie}
     return render(request, "LoR/DeckHomeView.html", context)
@@ -256,7 +261,9 @@ class PageView(generic.DetailView):
 
 # Gets the list of pages
 def PageList(request):
+    # Gets all Pages
     p = Page.objects.all()
+    # Gets all Offices
     offc = Office.objects.all()
     context = {"page": p, "offc": offc}
     return render(request, "LoR/PageList.html", context)
@@ -264,8 +271,11 @@ def PageList(request):
 
 # Gets the list of Characters
 def CharacterList(request):
+    # Gets all Characters
     chars = Character.objects.all()
+    # Gets all Characters without related Page
     sideChars = Character.objects.filter(Page_id=None)
+    # Gets all Offices
     offc = Office.objects.all()
     context = {"chars": chars, "sideChars": sideChars, "offc": offc}
     return render(request, "LoR/CharacterList.html", context)
