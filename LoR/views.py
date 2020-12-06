@@ -7,29 +7,28 @@ from django.urls import reverse
 import collections
 from django.contrib.auth.decorators import login_required
 
-
+# Simple Homepage
 def HomePage(request):
     return render(request, "LoR/LoRHomePage.html")
 
 
+# This is the homepage of offices, displays all Office
 class OfficeView(generic.DetailView):
     model = Office
     template_name = "LoR/OfficeDetail.html"
 
 
+# This is the homepage of Ranks, display all Ranks
 class RankView(generic.DetailView):
     model = Rank
     template_name = "LoR/RankDetail.html"
 
 
+# This is the Office Homepage
 def OfficeHomePage(request):
     Offc = Office.objects.all()
-    # cursor = connection.cursor()
-    # cursor.execute("""use library_of_ruina;
-    #         SELECT O.Rank_id,R.`Name`, COUNT(*) AS rank_num
-    #         FROM lor_office AS O INNER JOIN lor_rank AS R ON O.Rank_id = R.id
-    #         GROUP BY O.`Rank_id`""")
-    # results = cursor.fetchall()
+    # This is an example of a "Raw" SQL performed through django's embedded SQL
+    # It was the get a specific result I wanted
     NumberOfOff = Office.objects.raw(
         """
 SELECT O."Rank_id" AS id, R."Name", COUNT(*) AS "rank_num", R."slug"
@@ -43,6 +42,7 @@ ORDER BY O."Rank_id"
     return render(request, "LoR/OfficeHome.html", context)
 
 
+# This is the view for a Card
 def CardDetailView(request, slug):
 
     pag = Card.objects.raw(
@@ -54,8 +54,10 @@ WHERE R."id" = O."Rank_id" AND O."id" = C."Office_id" AND C."slug" = '{slug}'"""
     return render(request, "LoR/CardDetail.html", context)
 
 
+# This is a view for the list of all the cards
 def CardHomeView(request):
     Cards = Card.objects.all()
+    # Office is taken so that I can easily sort Cards by Offices
     Offices = Card.objects.raw(
         """SELECT O."id",O."Rank_id",O."Name" AS "OfficeName",COUNT(*) AS "NumberOfCards"
 FROM ("LoR_office" AS O INNER JOIN "LoR_card" AS C ON O."id" = C."Office_id")
@@ -63,6 +65,9 @@ GROUP BY O."id"
 ORDER BY O."id"
 """
     )
+
+    # Rank's Name, Count of offices in each Rank, 
+
     Ranks = Card.objects.raw(
         """SELECT R.id AS id,R."Name" AS RankName,COUNT(*) AS NumberOfOffices, R.slug
 FROM ("LoR_office" AS O LEFT JOIN "LoR_rank" AS R ON O."Rank_id" = R."id")
@@ -74,6 +79,7 @@ ORDER BY R."id"
     return render(request, "LoR/CardHome.html", context)
 
 
+# This form allows user to make their own decks!
 @login_required
 def deck_maker_form(request):
     if request.user.is_authenticated:
@@ -124,11 +130,12 @@ def deck_maker_form(request):
                 eff_list = list(dict.fromkeys(eff_list))
                 for effs in eff_list:
                     if effs is not None:
-                        q.effect.add(effs)
+                        q.effect.add(
+                            effs
+                        )  # This adds the list of effects into Deck's effect (data inserted into the join table)
                 for cards in y:
                     q.cards.add(cards, through_defaults={"card_count": y[cards]})
-                q.save()
-                # form.save()
+                q.save()  # commits and saves data into database
                 return HttpResponseRedirect(reverse("lor:Deck", args=(q.id,)))
 
         else:
@@ -139,6 +146,7 @@ def deck_maker_form(request):
         return HttpResponseRedirect(reverse("register"))
 
 
+# this is the view for user to create a guide
 @login_required
 def guide_maker_form(request):
     if request.user.is_authenticated:
@@ -173,9 +181,9 @@ def guide_maker_form(request):
                 for decks in y:
                     q.required_decks.add(
                         decks, through_defaults={"deck_count": y[decks]}
-                    )
+                    )  # This is adding deck into RelGuide table, take note that the deck count is also added
                 q.save()
-                # form.save()
+                # Returns player back to guide page
                 return HttpResponseRedirect(reverse("lor:Guide", args=(q.id,)))
 
         else:
@@ -186,21 +194,31 @@ def guide_maker_form(request):
         return HttpResponseRedirect(reverse("register"))
 
 
+# This is a normal view of the guide
 def GuideView(request, pk):
+    # Get all the decks by guide_id
     guideDecks = RelGuide.objects.filter(guide_id=pk).order_by("deck_id")
+    # Get guide info by id(from pk)
     guide = Guide.objects.filter(id=pk)
     context = {"guide": guide[0], "guideDecks": guideDecks}
     return render(request, "LoR/GuideView.html", context)
 
 
+# This is for the list of Guides View
 class guideHomeView(generic.ListView):
     model = Guide
     template_name = "LoR/GuideHome.html"
 
 
+# This is the page for the view of the deck
 def deckView(request, pk):
+    # Get all the cards in the deck in the RelDeck Join Table Though deck_id
+    # Ordered by Cost
     deckCards = RelDeck.objects.filter(deck_id=pk).order_by("card_id__Cost")
+    # Get the Deck information itself
     deck = Deck.objects.filter(id=pk)
+
+    # Calculating The Cost of all the cards
     cost = 0.0
     for cards in deckCards:
         for i in range(cards.card_count):
@@ -215,22 +233,27 @@ def deckView(request, pk):
     return render(request, "LoR/deckView.html", context)
 
 
+# This is the page for List of decks
 def deckHomeView(request):
+    # Get a simple list of decks
     deckie = Deck.objects.all()
     context = {"deckie": deckie}
     return render(request, "LoR/DeckHomeView.html", context)
 
 
+# Gets the Character
 class CharView(generic.DetailView):
     model = Character
     template_name = "LoR/CharacterView.html"
 
 
+# Gets the view of the Page
 class PageView(generic.DetailView):
     model = Page
     template_name = "LoR/PageView.html"
 
 
+# Gets the list of pages
 def PageList(request):
     p = Page.objects.all()
     offc = Office.objects.all()
@@ -238,6 +261,7 @@ def PageList(request):
     return render(request, "LoR/PageList.html", context)
 
 
+# Gets the list of Characters
 def CharacterList(request):
     chars = Character.objects.all()
     sideChars = Character.objects.filter(Page_id=None)

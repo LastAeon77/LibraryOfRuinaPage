@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as laz
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
 
-
+# model for Ranks
 class Rank(models.Model):
     Name = models.CharField(max_length=30, unique=True)
     Slogan = models.CharField(max_length=200)
@@ -15,6 +15,7 @@ class Rank(models.Model):
         return self.Name
 
 
+# model for Offices
 class Office(models.Model):
     Name = models.CharField(max_length=200, unique=True)
     Info = models.TextField()
@@ -26,6 +27,7 @@ class Office(models.Model):
         return self.Name
 
 
+# model for Effects
 class Effects(models.Model):
     Name = models.CharField(max_length=200)
     Description = models.TextField()
@@ -35,6 +37,7 @@ class Effects(models.Model):
         return f"{self.Name}: {self.Description}"
 
 
+# model for Page
 class Page(models.Model):
     Name = models.CharField(max_length=200, unique=True)
     Story = models.TextField()
@@ -76,6 +79,7 @@ class Page(models.Model):
         return self.Story.splitlines()
 
 
+# model for Characters
 class Character(models.Model):
     Name = models.CharField(max_length=100, unique=True)
     Story = models.TextField(null=True)
@@ -87,6 +91,7 @@ class Character(models.Model):
         return self.Name
 
 
+# model for Card
 class Card(models.Model):
     Name = models.CharField(max_length=200, unique=True)
 
@@ -112,6 +117,7 @@ class Card(models.Model):
     Roll1 = models.CharField(max_length=10, null=True, blank=True)
     Eff1 = models.CharField(max_length=200, null=True, blank=True)
 
+    # Class to restirct available choices for the box
     class Types(models.TextChoices):
         BLUNT = "BL", laz("Blunt")
         PIERCE = "PI", laz("Pierce")
@@ -119,6 +125,7 @@ class Card(models.Model):
         EVADE = "EV", laz("Evade")
         BLOCK = "BO", laz("Block")
 
+    # Restrict type of Card
     class CardTypes(models.TextChoices):
         MELEE = "M", laz("Melee")
         RANGED = "R", laz("Ranged")
@@ -174,6 +181,7 @@ class Card(models.Model):
         return self.pk
 
 
+# model for decks
 class Deck(models.Model):
     name = models.CharField(max_length=50, unique=True)
     creator = models.ForeignKey(
@@ -199,6 +207,7 @@ class Deck(models.Model):
         return self.description.splitlines()
 
 
+# join table for deck and cards
 class RelDeck(models.Model):
     deck_id = models.ForeignKey(Deck, on_delete=models.CASCADE)
     card_id = models.ForeignKey(Card, on_delete=models.CASCADE)
@@ -210,6 +219,7 @@ class RelDeck(models.Model):
         return self.deck_id.name
 
 
+# guide model
 class Guide(models.Model):
     name = models.CharField(max_length=50, unique=True)
     creator = models.ForeignKey(
@@ -228,6 +238,7 @@ class Guide(models.Model):
         return self.description.splitlines()
 
 
+# the join table for Guide and decks
 class RelGuide(models.Model):
     guide_id = models.ForeignKey(Guide, on_delete=models.CASCADE)
     deck_id = models.ForeignKey(Deck, on_delete=models.CASCADE)

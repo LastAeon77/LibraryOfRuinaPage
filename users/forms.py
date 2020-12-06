@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 
+# A simple form for user registration, uses Django's template
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField()
 

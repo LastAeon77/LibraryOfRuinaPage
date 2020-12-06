@@ -3,12 +3,9 @@ from django.contrib import messages
 from .forms import UserRegistrationForm
 from django.contrib.auth.decorators import login_required
 from LoR.models import Deck
-from django.urls import reverse_lazy
-from django.views.generic.edit import DeleteView
-
-# Create your views here.
 
 
+# Register page
 def register(request):
     if request.method == "POST":
         form = UserRegistrationForm(request.POST)
@@ -24,6 +21,8 @@ def register(request):
     return render(request, "users/register.html", {"form": form})
 
 
+# Profile page, not much
+# However, does include the list of decks created by that user, Queried
 @login_required
 def profile(request):
     deck_data = Deck.objects.all().filter(creator=request.user.id)

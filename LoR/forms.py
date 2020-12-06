@@ -4,15 +4,17 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
 import collections
 
-
+# This is the "form" for the Guide
 class GuideMakerForm(forms.Form):
     guide_name = forms.CharField(
         max_length=50, help_text="Please keep characters below 50!"
     )
     guide_description = forms.CharField(widget=forms.Textarea)
+    # floor is filtered through a query where the Rank belongs to the Library
     floor = forms.ModelChoiceField(
         queryset=Office.objects.all().filter(Rank=7),
     )
+    # Decks are also filtered for user to choose
     deck_1 = forms.ModelChoiceField(
         queryset=Deck.objects.all().order_by("name"),
     )
@@ -29,6 +31,7 @@ class GuideMakerForm(forms.Form):
         queryset=Deck.objects.all().order_by("name"),
     )
 
+    # Checks validity of inputted data
     def clean(self):
         N = self.cleaned_data.get("deck_name")
         J = Deck.objects.filter(name=N)
@@ -37,6 +40,7 @@ class GuideMakerForm(forms.Form):
         if len(str(N)) > 50:
             raise forms.ValidationError("Your name is too long!")
 
+    # A simple modifier to align the Form
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper
@@ -54,19 +58,23 @@ class GuideMakerForm(forms.Form):
         )
 
 
+# This is a "form" for user to make decks
 class DeckMakerForm(forms.Form):
     deck_name = forms.CharField(max_length=50)
     deck_description = forms.CharField(widget=forms.Textarea)
+    # Query to only allow users to choose offices relating to the Library
     Reccomended_Floor = forms.ModelChoiceField(
         queryset=Office.objects.all().filter(Rank=7),
         required=False,
         help_text="You can leave this blank",
     )
+    # Query the list of pages
     Reccomended_Page = forms.ModelChoiceField(
         queryset=Page.objects.all(),
         required=False,
         help_text="You can leave this blank",
     )
+    # Query the list of cards
     card_1 = forms.ModelChoiceField(
         queryset=Card.objects.all().order_by("Name"),
         required=True,
@@ -103,6 +111,8 @@ class DeckMakerForm(forms.Form):
         queryset=Card.objects.all().order_by("Name"),
         required=True,
     )
+
+    # Query the list of effects for user
     eff_1 = forms.ModelChoiceField(
         queryset=Effects.objects.all().order_by("Name"),
         required=False,
@@ -124,6 +134,7 @@ class DeckMakerForm(forms.Form):
         help_text="Make sure this is unique!",
     )
 
+    # This makes sure that there isn't more than 3 cards of the same id
     def clean(self):
 
         N = self.cleaned_data.get("deck_name")
@@ -160,6 +171,7 @@ class DeckMakerForm(forms.Form):
                 )
         return self.cleaned_data
 
+    # Form alignment, not important
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper

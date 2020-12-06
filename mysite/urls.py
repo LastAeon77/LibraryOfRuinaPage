@@ -19,6 +19,7 @@ from . import views
 from users import views as user_views
 from django.contrib.auth import views as auth_views
 
+# Includes the basic url patterns not closely related to our database
 urlpatterns = [
     path("", views.HomePage, name="HomePage"),
     path("lor/", include("LoR.urls"), name="LibraryOfRuina"),

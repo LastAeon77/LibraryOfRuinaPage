@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Card, Office, Rank, Deck, Page, Character, RelDeck, Guide, Effects
 
-
+# admin registers allows databases to be edited from the admin page
 admin.site.register(Office)
 admin.site.register(Rank)
 admin.site.register(Deck)
@@ -12,10 +12,10 @@ admin.site.register(Guide)
 admin.site.register(Effects)
 
 
+# This is a small modification to make setting large amount of card's offices differently easier
 class CardAdmin(admin.ModelAdmin):
 
     _update_fields = (
-        # ('Text for the dropdown', 'a_unique_function_name', 'some value')
         ("Make Rat", "make_rat", 1),
         ("Make Yun", "make_Yun", 2),
         ("Make Brotherhood of Iron", "make_Iron", 3),
