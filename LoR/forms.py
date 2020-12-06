@@ -4,6 +4,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
 import collections
 
+
 # This is the "form" for the Guide
 class GuideMakerForm(forms.Form):
     guide_name = forms.CharField(

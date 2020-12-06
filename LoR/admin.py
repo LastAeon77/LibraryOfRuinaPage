@@ -1,5 +1,15 @@
 from django.contrib import admin
-from .models import Card, Office, Rank, Deck, Page, Character, RelDeck, Guide, Effects
+from .models import (
+    Card,
+    Office,
+    Rank,
+    Deck,
+    Page,
+    Character,
+    RelDeck,
+    Guide,
+    Effects,
+)
 
 # admin registers allows databases to be edited from the admin page
 admin.site.register(Office)

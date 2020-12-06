@@ -1,11 +1,12 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.views import generic
 from .models import Office, Rank, Card, Deck, RelDeck, Page, Character, Guide, RelGuide
 from .forms import DeckMakerForm, GuideMakerForm
 from django.urls import reverse
 import collections
 from django.contrib.auth.decorators import login_required
+
 
 # Simple Homepage
 def HomePage(request):
@@ -44,7 +45,7 @@ ORDER BY O."Rank_id"
 
 # This is the view for a Card
 def CardDetailView(request, slug):
-
+    # Get the details of the card we need though the slug
     pag = Card.objects.raw(
         f"""SELECT C.*, R."Name" AS "Rank", O."Name" AS "off",R."ImgPath" AS "RankImg", O."ImgPath" AS "OffImg"
 FROM "LoR_office" AS O , "LoR_card" AS C,"LoR_rank" AS R
@@ -59,17 +60,17 @@ def CardHomeView(request):
     Cards = Card.objects.all()
     # Office is taken so that I can easily sort Cards by Offices
     Offices = Card.objects.raw(
-        """SELECT O."id",O."Rank_id",O."Name" AS "OfficeName",COUNT(*) AS "NumberOfCards"
+        """SELECT O."id",O."Rank_id",O."Name" AS "OfficeName",COUNT(*) AS "NumberOfCards", O."slug", O."ImgPath"
 FROM ("LoR_office" AS O INNER JOIN "LoR_card" AS C ON O."id" = C."Office_id")
 GROUP BY O."id"
 ORDER BY O."id"
 """
     )
 
-    # Rank's Name, Count of offices in each Rank, 
+    # Rank's Name, Count of offices in each Rank,
 
     Ranks = Card.objects.raw(
-        """SELECT R.id AS id,R."Name" AS RankName,COUNT(*) AS NumberOfOffices, R.slug
+        """SELECT R.id AS id,R."Name" AS RankName,COUNT(*) AS "NumberOfOffices", R."slug",R."ImgPath"
 FROM ("LoR_office" AS O LEFT JOIN "LoR_rank" AS R ON O."Rank_id" = R."id")
 GROUP BY R."id"
 ORDER BY R."id"
