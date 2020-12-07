@@ -8,7 +8,12 @@
 {% if character.Page.Name %}
 <h3 class = "is-size-3"><a href="{% url 'lor:Page' slug=character.Page.slug %}">{{character.Page.Name}}</a></h3>
 {% endif %}
+{% if character.Story is not None %}
 <h4>{{character.Story}}</h4>
+{% else %}
+<h4>This Character's story still has not been fully uncovered</h4>
+
+{% endif %}
 <img src="{% static  character.ImgPath  %}" alt="{{character.Name}} Icon" />
 </div>
 {% endblock content %}
