@@ -27,3 +27,13 @@ Queries used:
 - Get all the available information in Guides
 - Get all the available information on Characters with corresponding Page
 - Allow users to make their own decks through choosing their own cards.
+
+
+Users are allowed to:
+- Make their own decks
+- Make their own Guides with the available decks
+- Browse through Cards
+- Browse through Decks
+- Browse through Guests
+- Browse through Characters 
+- Browse trhough Guides
