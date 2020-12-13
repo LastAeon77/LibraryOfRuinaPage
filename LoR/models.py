@@ -10,7 +10,7 @@ class Rank(models.Model):
     Slogan = models.CharField(max_length=200)
     Description = models.TextField()
     ImgPath = models.CharField(max_length=300)
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(null=True, unique=True)
 
     def __str__(self):
         return self.Name
@@ -22,7 +22,7 @@ class Office(models.Model):
     Info = models.TextField()
     Rank = models.ForeignKey(Rank, on_delete=models.CASCADE)
     ImgPath = models.CharField(max_length=300)
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(null=True, unique=True)
 
     def __str__(self):
         return self.Name
@@ -58,7 +58,7 @@ class Page(models.Model):
         null=True,
     )
     InitialEffects = models.ManyToManyField(Effects, blank=True)
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(null=True, unique=True)
     Office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
     HP = models.IntegerField(blank=True, null=True)
     Stagger = models.IntegerField(blank=True, null=True)
@@ -86,7 +86,7 @@ class Character(models.Model):
     Story = models.TextField(null=True)
     Page = models.ForeignKey(Page, on_delete=models.CASCADE, null=True)
     ImgPath = models.CharField(max_length=300, null=True)
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(null=True, unique=True)
 
     def __str__(self):
         return self.Name
@@ -173,7 +173,7 @@ class Card(models.Model):
         blank=True,
         default=None,
     )
-    slug = models.SlugField(null=True)
+    slug = models.SlugField(null=True, unique=True)
 
     def __str__(self):
         return self.Name
