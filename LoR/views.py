@@ -242,7 +242,7 @@ def deckView(request, pk):
 # This is the page for List of decks
 def deckHomeView(request):
     # Gets all decks
-    deckie = Deck.objects.all()
+    deckie = Deck.objects.all().order_by('-id')
     context = {"deckie": deckie}
     return render(request, "LoR/DeckHomeView.html", context)
 
