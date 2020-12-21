@@ -2,30 +2,66 @@
 {% load static%}
 {% block content %}
 
+<script>
+    function filter() {
+        var value = document.getElementById("searchForm").value
+        var cards = document.getElementById("cardList").getElementsByTagName("li")
+        var ranks = document.getElementsByTagName('h1')
+        var offices = document.getElementsByTagName('h2')
+        if (value.length > 0) {
+            Array.prototype.forEach.call(ranks, (stuff) => (stuff.style.display = "none"))
+            Array.prototype.forEach.call(offices, (stuff) => (stuff.style.display = "none"))
+
+        }
+        else {
+            Array.prototype.forEach.call(ranks, (stuff) => (stuff.style.display = "block"))
+            Array.prototype.forEach.call(offices, (stuff) => (stuff.style.display = "block"))
+        }
+        Array.prototype.forEach.call(cards, function (stuff) {
+            if (stuff.textContent.toLowerCase().search(value.toLowerCase()) > -1) {
+                stuff.style.display = "block"
+                stuff.style.fontSize = "large"
+            }
+            else {
+                stuff.style.display = "none"
+            }
+        });
+    }
+</script>
+
+<div class="field has-text-centered">
+    <label class="label is-size-3 has-text-warning-light">Search a Card!</label>
+    <div class="control">
+        <input class="is-size-3" type="text" onkeyup="filter()" id="searchForm" placeholder="Type Here!" />
+    </div>
+</div>
+
 <div class="has-text-centered">
-    <h1 class="is-size-1">List of Cards</h1>
-    <ul>
-        {% for ranks in rank %}
-        <h1 class="is-size-3">{{ranks.rankname}} : {{ranks.NumberOfOffices}}<a
-                href="{% url 'lor:Rank' slug=ranks.slug %}"><img src="{% static  ranks.ImgPath  %}"
-                alt="{{ranks.Name}} Icon" height=30px, width=30px /></a></h1>
-        {% for offices in office%}
-        {%if offices.Rank_id == ranks.id%}
-            <h2 class="is-size-5 has-text-warning-dark">{{ offices.OfficeName }} : {{offices.NumberOfCards}}
-        <a href="{% url 'lor:Office' slug=offices.slug %}">
-            <img src="{% static  offices.ImgPath  %}"
-            alt="{{offices.Name}} Icon" height=30px, width=30px />
-        </a></h2>
-        <ul>
-            {% for cards in card%}
-            {%if cards.Office_id == offices.id%}
-            <li><a href="{% url 'lor:Card' slug=cards.slug %}">{{cards.Name}}</a></li>
-            {%endif%}
-            {% endfor %}
-        </ul>
-        {%endif%}
-        {% endfor %}
-        {% endfor %}
-    </ul>
+    <div id="cardList">
+        <h5 class="is-size-1 has-text-danger-light">List of Cards</h1>
+            <ul>
+                {% for ranks in rank %}
+                <h1 class="is-size-1">{{ranks.rankname}} : {{ranks.NumberOfOffices}}<a
+                        href="{% url 'lor:Rank' slug=ranks.slug %}"><img src="{% static  ranks.ImgPath  %}"
+                            alt="{{ranks.Name}} Icon" height=30px, width=30px /></a></h1>
+                {% for offices in office%}
+                {%if offices.Rank_id == ranks.id%}
+                <h2 class="is-size-2 has-text-warning-dark">{{ offices.OfficeName }} : {{offices.NumberOfCards}}
+                    <a href="{% url 'lor:Office' slug=offices.slug %}">
+                        <img src="{% static  offices.ImgPath  %}" alt="{{offices.Name}} Icon" height=30px, width=30px />
+                    </a>
+                </h2>
+                <ul>
+                    {% for cards in card%}
+                    {%if cards.Office_id == offices.id%}
+                    <li class = "is-size-4"><a href="{% url 'lor:Card' slug=cards.slug %}">{{cards.Name}}</a></li>
+                    {%endif%}
+                    {% endfor %}
+                </ul>
+                {%endif%}
+                {% endfor %}
+                {% endfor %}
+            </ul>
+    </div>
 </div>
 {% endblock content %}
