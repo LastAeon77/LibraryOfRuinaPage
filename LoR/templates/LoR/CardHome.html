@@ -20,7 +20,7 @@
         Array.prototype.forEach.call(cards, function (stuff) {
             if (stuff.textContent.toLowerCase().search(value.toLowerCase()) > -1) {
                 stuff.style.display = "block"
-                stuff.style.fontSize = "large"
+                stuff.style.fontSize = "medium"
             }
             else {
                 stuff.style.display = "none"
@@ -41,12 +41,12 @@
         <h5 class="is-size-1 has-text-danger-light">List of Cards</h1>
             <ul>
                 {% for ranks in rank %}
-                <h1 class="is-size-1">{{ranks.rankname}} : {{ranks.NumberOfOffices}}<a
+                <h1 class="is-size-3">{{ranks.rankname}} : {{ranks.NumberOfOffices}}<a
                         href="{% url 'lor:Rank' slug=ranks.slug %}"><img src="{% static  ranks.ImgPath  %}"
                             alt="{{ranks.Name}} Icon" height=30px, width=30px /></a></h1>
                 {% for offices in office%}
                 {%if offices.Rank_id == ranks.id%}
-                <h2 class="is-size-2 has-text-warning-dark">{{ offices.OfficeName }} : {{offices.NumberOfCards}}
+                <h2 class="is-size-4 has-text-warning-dark">{{ offices.OfficeName }} : {{offices.NumberOfCards}}
                     <a href="{% url 'lor:Office' slug=offices.slug %}">
                         <img src="{% static  offices.ImgPath  %}" alt="{{offices.Name}} Icon" height=30px, width=30px />
                     </a>
@@ -54,7 +54,7 @@
                 <ul>
                     {% for cards in card%}
                     {%if cards.Office_id == offices.id%}
-                    <li class = "is-size-4"><a href="{% url 'lor:Card' slug=cards.slug %}">{{cards.Name}}</a></li>
+                    <li class = "is-size-5"><a href="{% url 'lor:Card' slug=cards.slug %}">{{cards.Name}}</a></li>
                     {%endif%}
                     {% endfor %}
                 </ul>
