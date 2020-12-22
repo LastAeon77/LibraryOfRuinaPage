@@ -125,6 +125,11 @@ class Card(models.Model):
         SLASH = "SL", laz("Slash")
         EVADE = "EV", laz("Evade")
         BLOCK = "BO", laz("Block")
+        BLOCKCOUNTER = "CB", laz("Block Counter")
+        PIERCECOUNTER = "CP", laz("Pierce Counter")
+        SLASHCOUNTER = "CS", laz("Slash Counter")
+        EVADECOUNTER = "CE", laz("Evade Counter")
+        BLUNTCOUNTER = "CC", laz("Blunt Counter")
 
     # Restrict type of Card
     class CardTypes(models.TextChoices):
