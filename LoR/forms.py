@@ -1,5 +1,5 @@
 from django import forms
-from .models import Card, Deck, Office, Page, Effects
+from .models import Card, Deck, Office, Page, Effects, Rank
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit
 import collections
@@ -74,6 +74,13 @@ class DeckMakerForm(forms.Form):
         queryset=Page.objects.all(),
         required=False,
         help_text="You can leave this blank",
+    )
+
+    # Query the list of Ranks
+    Reccomended_Rank = forms.ModelChoiceField(
+        queryset=Rank.objects.exclude(id=7).order_by("id"),
+        required=False,
+        help_text="What Rank/Chapter is this deck viable at?",
     )
     # Query the list of cards
     card_1 = forms.ModelChoiceField(
@@ -182,6 +189,7 @@ class DeckMakerForm(forms.Form):
             "deck_description",
             "Reccomended_Floor",
             "Reccomended_Page",
+            "Reccomended_Rank",
             "card_1",
             "card_2",
             "card_3",

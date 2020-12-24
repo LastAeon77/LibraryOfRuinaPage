@@ -10,6 +10,7 @@
         <th>Deck Name</th>
         <th>Creator</th>
         <th>Id</th>
+        <th>Rank/Chapter</th>
     </tr>
     </thead>
     {% for decks in deckie %}
@@ -17,6 +18,7 @@
         <td><a href="{% url 'lor:Deck' pk=decks.pk %}">{{decks.name}}</a></td>
         <td>{{decks.creator}}</td>
         <td>{{decks.id}}</td>
+        <td>{{decks.Recc_Rank}}</td>
     </tr>
     {% endfor %}
 </table>

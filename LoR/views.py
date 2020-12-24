@@ -98,6 +98,7 @@ def deck_maker_form(request):
                 desc = form.cleaned_data["deck_description"]
                 recc_floor = form.cleaned_data["Reccomended_Floor"]
                 recc_page = form.cleaned_data["Reccomended_Page"]
+                recc_rank = form.cleaned_data["Reccomended_Rank"]
                 card1 = form.cleaned_data["card_1"]
                 card2 = form.cleaned_data["card_2"]
                 card3 = form.cleaned_data["card_3"]
@@ -125,6 +126,7 @@ def deck_maker_form(request):
                     description=desc,
                     Recc_Floor=recc_floor,
                     Recc_Page=recc_page,
+                    Recc_Rank=recc_rank,
                 )
                 q.save()
                 eff_1 = form.cleaned_data["eff_1"]
@@ -242,7 +244,7 @@ def deckView(request, pk):
 # This is the page for List of decks
 def deckHomeView(request):
     # Gets all decks
-    deckie = Deck.objects.all().order_by('-id')
+    deckie = Deck.objects.all().order_by("-id")
     context = {"deckie": deckie}
     return render(request, "LoR/DeckHomeView.html", context)
 

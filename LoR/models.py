@@ -204,6 +204,12 @@ class Deck(models.Model):
         null=True,
         blank=True,
     )
+    Recc_Rank = models.ForeignKey(
+        Rank,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
     effect = models.ManyToManyField(Effects)
 
     def __str__(self):
