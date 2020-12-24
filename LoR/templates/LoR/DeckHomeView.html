@@ -2,6 +2,10 @@
 {% load static%}
 {% block content %}
 
+<script>
+
+
+</script>
 
 <h1 class ="is-size-1">List of Decks</h1>
 <table class="table is-bordered is-fullwidth is-striped has-background-grey">
@@ -14,7 +18,7 @@
     </tr>
     </thead>
     {% for decks in deckie %}
-    <tr class="notification has-background-grey-light">
+    <tr class="notification has-background-grey-light" id="{% decks.Recc_Rank %}">
         <td><a href="{% url 'lor:Deck' pk=decks.pk %}">{{decks.name}}</a></td>
         <td>{{decks.creator}}</td>
         <td>{{decks.id}}</td>

@@ -7,13 +7,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('LoR', '0044_auto_20201221_1630'),
+        ("LoR", "0044_auto_20201221_1630"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='deck',
-            name='Recc_Rank',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='LoR.rank'),
+            model_name="deck",
+            name="Recc_Rank",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="LoR.rank",
+            ),
         ),
     ]
