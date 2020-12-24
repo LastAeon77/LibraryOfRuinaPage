@@ -18,7 +18,7 @@
     </tr>
     </thead>
     {% for decks in deckie %}
-    <tr class="notification has-background-grey-light" id="{% decks.Recc_Rank %}">
+    <tr class="notification has-background-grey-light">
         <td><a href="{% url 'lor:Deck' pk=decks.pk %}">{{decks.name}}</a></td>
         <td>{{decks.creator}}</td>
         <td>{{decks.id}}</td>
