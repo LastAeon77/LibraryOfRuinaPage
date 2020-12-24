@@ -1,16 +1,24 @@
 {% extends "home/NavBarBase.html" %}
-{% load static%}
+{% load static %}
 {% block content %}
 
-<script>
+<script src="{% static 'LoR_Data/Scripts/min.js' %}"></script>
 
-
-</script>
-
+<div class="select">
+    <select id="Rank" onchange="Deckfilter()">
+        <option value="any">Select Chapter</option>
+        <option value="Canard">Canard</option>
+        <option value="Urban Myth">Urban Myth</option>
+        <option value="Urban Legend">Urban Legend</option>
+        <option value="Urban Plague">Urban Plague</option>
+        <option value="Urban Nightmare">Urban Nightmare</option>
+        <option value="Star of the City">Star of the City</option>
+    </select>
+</div>
 <h1 class ="is-size-1">List of Decks</h1>
 <table class="table is-bordered is-fullwidth is-striped has-background-grey">
     <thead>
-    <tr>
+    <tr id="">
         <th>Deck Name</th>
         <th>Creator</th>
         <th>Id</th>
@@ -18,7 +26,7 @@
     </tr>
     </thead>
     {% for decks in deckie %}
-    <tr class="notification has-background-grey-light">
+    <tr id="{{ decks.Recc_Rank }}" class="notification has-background-grey-light">
         <td><a href="{% url 'lor:Deck' pk=decks.pk %}">{{decks.name}}</a></td>
         <td>{{decks.creator}}</td>
         <td>{{decks.id}}</td>
