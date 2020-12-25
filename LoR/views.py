@@ -6,6 +6,8 @@ from django.urls import reverse
 import collections
 from django.contrib.auth.decorators import login_required
 from django.views import generic  # generic.DetailView and generic.ListView
+from rest_framework import generics
+from .serializers import DeckSerializers, CardSerializers
 
 # DetailView will fetch a certain row through its unique id in url
 # ListView will fetch all rows of a Relation
@@ -57,6 +59,11 @@ WHERE R."id" = O."Rank_id" AND O."id" = C."Office_id" AND C."slug" = '{slug}'"""
     )
     context = {"card": pag[0]}
     return render(request, "LoR/CardDetail.html", context)
+
+
+class cardSerial(generics.RetrieveAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializers
 
 
 # This is a view for the list of all the cards
@@ -239,6 +246,11 @@ def deckView(request, pk):
 
     context = {"deck": deck[0], "deckCards": deckCards, "avgCost": avgCost}
     return render(request, "LoR/deckView.html", context)
+
+
+class deckSerail(generics.RetrieveAPIView):
+    queryset = Deck.objects.all()
+    serializer_class = DeckSerializers
 
 
 # This is the page for List of decks

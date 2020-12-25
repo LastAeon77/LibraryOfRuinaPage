@@ -22,4 +22,6 @@ urlpatterns = [
     path("guide/<int:pk>", views.GuideView, name="Guide"),
     path("guide", views.guideHomeView.as_view(), name="GuideHome"),
     path("guide/add", views.guide_maker_form, name="GuideAdd"),
+    path("api/deck/<int:pk>", views.deckSerail.as_view(), name="DeckAPIView"),
+    path("api/card/<int:pk>", views.cardSerial.as_view(), name="CardAPIView"),
 ] + staticfiles_urlpatterns()
