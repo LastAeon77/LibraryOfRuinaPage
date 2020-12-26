@@ -55,6 +55,7 @@ class CardAdmin(admin.ModelAdmin):
         ("Make Warp Cleanup Crew", "make_Warp", 25),
         ("Make Liu Association", "make_Liu", 26),
         ("Make Library", "make_Library", 27),
+        ("Make Purple Tear", "make_purple", 44),
     )
 
     def get_actions(self, request):
