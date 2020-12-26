@@ -24,7 +24,6 @@ class DeckSerializers(serializers.ModelSerializer):
     Recc_Page = serializers.StringRelatedField(read_only=True)
     Recc_Rank = serializers.StringRelatedField(read_only=True)
     creator = serializers.StringRelatedField(read_only=True)
-    cardImage = serializers.SerializerMethodField
 
     class Meta:
         model = Deck
