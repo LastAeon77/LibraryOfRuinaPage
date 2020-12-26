@@ -142,6 +142,12 @@ class DeckMakerForm(forms.Form):
         help_text="Make sure this is unique!",
     )
 
+    show = forms.BooleanField(
+        label="Make Visible in Deck list Page? Uncheck if no",
+        initial=True,
+        required=False
+    )
+
     # This makes sure that there isn't more than 3 cards of the same id
     def clean(self):
 
@@ -203,5 +209,6 @@ class DeckMakerForm(forms.Form):
             "eff_2",
             "eff_3",
             "eff_4",
+            "show",
             Submit("submit", "Submit", css_class="btn-success"),
         )

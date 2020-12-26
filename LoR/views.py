@@ -7,7 +7,7 @@ import collections
 from django.contrib.auth.decorators import login_required
 from django.views import generic  # generic.DetailView and generic.ListView
 from rest_framework import generics
-from .serializers import DeckSerializers, CardSerializers
+from .serializers import DeckSerializers, CardSerializers, RankSerializers
 
 # DetailView will fetch a certain row through its unique id in url
 # ListView will fetch all rows of a Relation
@@ -29,6 +29,10 @@ class RankView(generic.DetailView):
     model = Rank
     template_name = "LoR/RankDetail.html"
 
+
+class rankSerial(generics.RetrieveAPIView):
+    queryset = Rank.objects.all()
+    serializer_class = RankSerializers
 
 # This is the Office Homepage
 def OfficeHomePage(request):
@@ -115,6 +119,7 @@ def deck_maker_form(request):
                 card7 = form.cleaned_data["card_7"]
                 card8 = form.cleaned_data["card_8"]
                 card9 = form.cleaned_data["card_9"]
+                show = form.cleaned_data["show"]
                 list_of_card = [
                     card1,
                     card2,
@@ -134,6 +139,7 @@ def deck_maker_form(request):
                     Recc_Floor=recc_floor,
                     Recc_Page=recc_page,
                     Recc_Rank=recc_rank,
+                    show=show
                 )
                 q.save()
                 eff_1 = form.cleaned_data["eff_1"]
@@ -256,7 +262,7 @@ class deckSerail(generics.RetrieveAPIView):
 # This is the page for List of decks
 def deckHomeView(request):
     # Gets all decks
-    deckie = Deck.objects.all().order_by("-id")
+    deckie = Deck.objects.all().order_by("-id").exclude(show=False)
     context = {"deckie": deckie}
     return render(request, "LoR/DeckHomeView.html", context)
 

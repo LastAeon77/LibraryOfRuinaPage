@@ -211,6 +211,7 @@ class Deck(models.Model):
         null=True,
     )
     effect = models.ManyToManyField(Effects)
+    show = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
