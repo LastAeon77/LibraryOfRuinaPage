@@ -3,18 +3,27 @@ from LoR.models import Deck, Card, Rank
 
 
 class DeckSerializers(serializers.ModelSerializer):
+    cards = serializers.StringRelatedField(many=True, read_only=True)
+    effect = serializers.StringRelatedField(many=True, read_only=True)
+    Recc_Floor = serializers.StringRelatedField(read_only=True)
+    Recc_Page = serializers.StringRelatedField(read_only=True)
+    Recc_Rank = serializers.StringRelatedField(read_only=True)
+    creator = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Deck
-        fields = '__all__'
+        fields = "__all__"
 
 
 class CardSerializers(serializers.ModelSerializer):
+    Office = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Card
-        fields = '__all__'
+        fields = "__all__"
 
 
 class RankSerializers(serializers.ModelSerializer):
     class Meta:
         model = Rank
-        fields = '__all__'
+        fields = "__all__"
