@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from LoR.models import Deck, Card, Rank, RelDeck
+from LoR.models import Deck, Card, Rank, RelDeck, AbnoCards
 
 
 class CardCountSerializers(serializers.ModelSerializer):
@@ -17,7 +17,7 @@ class CardDeckSerializers(serializers.ModelSerializer):
 
 
 class DeckSerializers(serializers.ModelSerializer):
-    card_count = serializers.SerializerMethodField("get_card_set")
+    card_count = serializers.SerializerMethodField()
     cards = CardDeckSerializers(many=True, read_only=True)
     effect = serializers.StringRelatedField(many=True, read_only=True)
     Recc_Floor = serializers.StringRelatedField(read_only=True)
@@ -29,7 +29,7 @@ class DeckSerializers(serializers.ModelSerializer):
         model = Deck
         fields = "__all__"
 
-    def get_card_set(self, instance):
+    def get_card_count(self, instance):
         reldecks = instance.reldeck_set.all().order_by("card_id")
         return CardCountSerializers(reldecks, many=True).data
 
@@ -45,4 +45,10 @@ class CardSerializers(serializers.ModelSerializer):
 class RankSerializers(serializers.ModelSerializer):
     class Meta:
         model = Rank
+        fields = "__all__"
+
+
+class AbnoSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = AbnoCards
         fields = "__all__"

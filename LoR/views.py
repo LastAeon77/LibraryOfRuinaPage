@@ -18,7 +18,12 @@ import collections
 from django.contrib.auth.decorators import login_required
 from django.views import generic  # generic.DetailView and generic.ListView
 from rest_framework import generics
-from .serializers import DeckSerializers, CardSerializers, RankSerializers
+from .serializers import (
+    DeckSerializers,
+    CardSerializers,
+    RankSerializers,
+    AbnoSerializers,
+)
 
 # DetailView will fetch a certain row through its unique id in url
 # ListView will fetch all rows of a Relation
@@ -163,9 +168,7 @@ def deck_maker_form(request):
                 eff_list = list(dict.fromkeys(eff_list))
                 for effs in eff_list:
                     if effs is not None:
-                        q.effect.add(
-                            effs
-                        )  # This adds the list of effects into Deck's effect (data inserted into the join table)
+                        q.effect.add(effs)
                 for cards in y:
                     q.cards.add(cards, through_defaults={"card_count": y[cards]})
                 q.save()  # commits and saves data into database
@@ -326,3 +329,9 @@ def AbnoList(request):
 class AbnoView(generic.DetailView):
     model = AbnoCards
     template_name = "LoR/AbnoView.html"
+
+
+class AbnoViewSet(generics.ListAPIView):
+
+    queryset = AbnoCards.objects.all()
+    serializer_class = AbnoSerializers
