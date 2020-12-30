@@ -9,7 +9,8 @@ from .models import (
     RelDeck,
     Guide,
     Effects,
-    RelGuide
+    RelGuide,
+    AbnoCards
 )
 
 # admin registers allows databases to be edited from the admin page
@@ -22,6 +23,7 @@ admin.site.register(RelDeck)
 admin.site.register(Guide)
 admin.site.register(Effects)
 admin.site.register(RelGuide)
+admin.site.register(AbnoCards)
 
 
 # This is a small modification to make setting large amount of card's offices differently easier

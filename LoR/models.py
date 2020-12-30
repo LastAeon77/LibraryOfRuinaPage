@@ -261,3 +261,16 @@ class RelGuide(models.Model):
 
     def __str__(self):
         return self.guide_id.name
+
+
+class AbnoCards(models.Model):
+    name = models.CharField(max_length=200, unique=True)
+    effects = models.TextField()
+    description = models.TextField()
+    ImgPath = models.CharField(max_length=200, blank=True)
+    Office = models.ForeignKey(
+        Office,
+        on_delete=models.CASCADE,
+        limit_choices_to={'Rank': 7}
+    )
+    
