@@ -271,17 +271,17 @@ class AbnoCards(models.Model):
     Office = models.ForeignKey(
         Office, on_delete=models.CASCADE, limit_choices_to={"Rank": 7}
     )
-    BREAKDOWN = 'BD'
-    AWAKENING = 'AW'
+    BREAKDOWN = "BD"
+    AWAKENING = "AW"
     EMOTION_STATE = [
         (BREAKDOWN, "Breakdown page"),
         (AWAKENING, "Awakening page"),
     ]
     emotion_type = models.CharField(
-        max_length=2,
-        choices=EMOTION_STATE,
-        default=AWAKENING,
-        blank=True
+        max_length=2, choices=EMOTION_STATE, default=AWAKENING, blank=True
+    )
+    emotion_level = models.IntegerField(
+        default=1, validators=[MaxValueValidator(10), MinValueValidator(0)]
     )
 
     def __str__(self):
