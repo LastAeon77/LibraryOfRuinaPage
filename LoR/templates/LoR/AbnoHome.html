@@ -1,0 +1,23 @@
+{% extends "home/NavBarBase.html" %}
+{% load static%}
+{% block content %}
+<div class="has-text-centered">
+
+    <h1 class="is-size-1">List of Abnormality Pages</h1>
+
+    <ul>
+
+        {% for floor in floors %}
+        <h1 class="is-size-3 has-text-warning-light">{{floor}}</h1>
+        {% for abno in abnos %}
+        {% if floor.id == abno.Office_id %}
+        <a href="{% url 'lor:Abno' pk=abno.pk %}">
+            <h3 class="is-size-5">{{abno.name}}</h3>
+        </a>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock content %}

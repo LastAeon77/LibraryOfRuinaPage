@@ -1,0 +1,31 @@
+{% extends "home/NavBarBase.html" %}
+{% load static%}
+{% block content %}
+<div class="has-text-centered">
+
+    <h1 class="is-size-1 has-text-light"> {{abnocards.name}} </h1>
+    <div class="container">
+        <h1 class="is-size-3 has-text-primary">{{abnocards.Office}}</h1>
+        <h1 class="is-size-3 has-text-primary">Type: {{abnocards.get_emotion_type_display}}</h1>
+        <h1 class="is-size-3 has-text-primary">Emotion Level: {{abnocards.emotion_level}}</h1>
+        <img src="{% static  abnocards.ImgPath  %}" alt="{{abnocards.name}}" />
+        <div class="level">
+            <div class="level-left">
+                <h2 class="is-size-3 has-text-light level-item">Effects </h2>
+            </div>
+            <div class="level-right">
+                <h2 class="is-size-3 has-text-light level-item">Description: </h2>
+            </div>
+        </div>
+        <div class="level">
+            <div class="level-left is-size-5">
+                <p class="level-item">{{abnocards.effects}}</p>
+            </div>
+            <div class="level-right is-size-5">
+                <p class="level-item">{{abnocards.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

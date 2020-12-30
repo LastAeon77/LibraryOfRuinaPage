@@ -1,6 +1,17 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .models import Office, Rank, Card, Deck, RelDeck, Page, Character, Guide, RelGuide
+from .models import (
+    Office,
+    Rank,
+    Card,
+    Deck,
+    RelDeck,
+    Page,
+    Character,
+    Guide,
+    RelGuide,
+    AbnoCards,
+)
 from .forms import DeckMakerForm, GuideMakerForm
 from django.urls import reverse
 import collections
@@ -33,6 +44,7 @@ class RankView(generic.DetailView):
 class rankSerial(generics.RetrieveAPIView):
     queryset = Rank.objects.all()
     serializer_class = RankSerializers
+
 
 # This is the Office Homepage
 def OfficeHomePage(request):
@@ -139,7 +151,7 @@ def deck_maker_form(request):
                     Recc_Floor=recc_floor,
                     Recc_Page=recc_page,
                     Recc_Rank=recc_rank,
-                    show=show
+                    show=show,
                 )
                 q.save()
                 eff_1 = form.cleaned_data["eff_1"]
@@ -299,3 +311,18 @@ def CharacterList(request):
     offc = Office.objects.all()
     context = {"chars": chars, "sideChars": sideChars, "offc": offc}
     return render(request, "LoR/CharacterList.html", context)
+
+
+# This is the homepage of Ranks, display a Rank id = pk
+def AbnoList(request):
+    floors = Office.objects.filter(Rank=7)
+    abnos = AbnoCards.objects.all()
+
+    context = {"floors": floors, "abnos": abnos}
+    return render(request, "LoR/AbnoHome.html", context)
+
+
+# Abno
+class AbnoView(generic.DetailView):
+    model = AbnoCards
+    template_name = "LoR/AbnoView.html"
