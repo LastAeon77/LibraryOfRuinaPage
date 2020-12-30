@@ -4,19 +4,19 @@
 <div class="has-text-centered">
 
     <h1 class="is-size-1 has-text-light"> {{abnocards.name}} </h1>
-    <h1 class="is-size-3 has-text-primary">{{abnocards.Office}}</h1>
-    <h1 class="is-size-3 has-text-primary">Type: {{abnocards.get_emotion_type_display}}</h1>
-    <h1 class="is-size-3 has-text-primary">Emotion Level: {{abnocards.emotion_level}}</h1>
+    <h1 class="is-size-4 has-text-primary">{{abnocards.Office}}</h1>
+    <h1 class="is-size-4 has-text-primary">Type: {{abnocards.get_emotion_type_display}}</h1>
+    <h1 class="is-size-4 has-text-primary">Emotion Level: {{abnocards.emotion_level}}</h1>
     <img src="{% static  abnocards.ImgPath  %}" alt="{{abnocards.name}}" />
     <div class="columns">
         <div class="column is-half">
-            <div class="box has-background-info" style="width: 600px; height: 500px;">
+            <div class="box has-background-info" style="width: 600px; height: 250px;">
                 <h2 class="title is-5 has-text-black">Effects </h2>
                 <p class="subtitle has-text-black">{{abnocards.effects}}</p>
             </div>
         </div>
         <div class="column is-half">
-            <div class="box has-background-danger" style="width: 600px; height: 500px;">
+            <div class="box has-background-danger" style="width: 600px; height: 250px;">
                 <h2 class="title is-5 has-text-black">Description: </h2>
                 <p class="subtitle has-text-black">{{abnocards.description}}</p>
             </div>
