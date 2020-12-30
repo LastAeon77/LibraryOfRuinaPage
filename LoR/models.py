@@ -269,8 +269,8 @@ class AbnoCards(models.Model):
     description = models.TextField()
     ImgPath = models.CharField(max_length=200, blank=True)
     Office = models.ForeignKey(
-        Office,
-        on_delete=models.CASCADE,
-        limit_choices_to={'Rank': 7}
+        Office, on_delete=models.CASCADE, limit_choices_to={"Rank": 7}
     )
-    
+
+    def __str__(self):
+        return self.name
