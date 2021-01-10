@@ -7,7 +7,7 @@
     {% for o in offc %}
     <h2 class="is-size-2 has-text-warning-dark">{{o.Name}}</h2>
     {% for p in page %}
-    {% if p.Office.id == o.id %}
+    {% if p.office.id == o.id %}
     <li><a href="{% url 'lor:Page' slug=p.slug %}">{{p.Name}}</a></li>
     {% endif %}
     {% endfor  %}

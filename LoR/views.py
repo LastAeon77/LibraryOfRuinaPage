@@ -76,7 +76,7 @@ def CardDetailView(request, slug):
     pag = Card.objects.raw(
         f"""SELECT C.*, R."Name" AS "Rank", O."Name" AS "off",R."ImgPath" AS "RankImg", O."ImgPath" AS "OffImg"
 FROM "LoR_office" AS O , "LoR_card" AS C,"LoR_rank" AS R
-WHERE R."id" = O."Rank_id" AND O."id" = C."Office_id" AND C."slug" = '{slug}'"""
+WHERE R."id" = O."Rank_id" AND O."id" = C."office_id" AND C."slug" = '{slug}'"""
     )
     context = {"card": pag[0]}
     return render(request, "LoR/CardDetail.html", context)
@@ -94,7 +94,7 @@ def CardHomeView(request):
     # Gets all Office id, Rank, Name, Number of Cards, Slug, and Image Path
     Offices = Card.objects.raw(
         """SELECT O."id",O."Rank_id",O."Name" AS "OfficeName",COUNT(*) AS "NumberOfCards", O."slug", O."ImgPath"
-FROM ("LoR_office" AS O INNER JOIN "LoR_card" AS C ON O."id" = C."Office_id")
+FROM ("LoR_office" AS O INNER JOIN "LoR_card" AS C ON O."id" = C."office_id")
 GROUP BY O."id"
 ORDER BY O."id"
 """

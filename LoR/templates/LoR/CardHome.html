@@ -53,7 +53,7 @@
                 </h2>
                 <ul>
                     {% for cards in card%}
-                    {%if cards.Office_id == offices.id%}
+                    {%if cards.office_id == offices.id%}
                     <li class = "is-size-5"><a href="{% url 'lor:Card' slug=cards.slug %}">{{cards.Name}}</a></li>
                     {%endif%}
                     {% endfor %}

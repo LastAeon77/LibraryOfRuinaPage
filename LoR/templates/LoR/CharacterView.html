@@ -4,7 +4,7 @@
 
 <div class = "has-text-centered">
 <h1  class = "is-size-1 has-text-warning-dark">{{ character.Name }}</h1>
-<h3 class = "is-size-3 has-text-danger"><a href="{% url 'lor:Office' slug=character.Page.Office.slug %}">{{character.Page.Office.Name}}</a></h3>
+<h3 class = "is-size-3 has-text-danger"><a href="{% url 'lor:Office' slug=character.Page.office.slug %}">{{character.Page.office.Name}}</a></h3>
 {% if character.Page.Name %}
 <h3 class = "is-size-3"><a href="{% url 'lor:Page' slug=character.Page.slug %}">{{character.Page.Name}}</a></h3>
 {% endif %}

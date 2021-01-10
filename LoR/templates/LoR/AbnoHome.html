@@ -10,7 +10,7 @@
         {% for floor in floors %}
         <h1 class="is-size-3 has-text-warning-light">{{floor}}</h1>
         {% for abno in abnos %}
-        {% if floor.id == abno.Office_id %}
+        {% if floor.id == abno.office_id %}
         <a href="{% url 'lor:Abno' pk=abno.pk %}">
             <h3 class="is-size-5">{{abno.name}}</h3>
         </a>

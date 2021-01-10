@@ -59,7 +59,7 @@ class Page(models.Model):
     )
     InitialEffects = models.ManyToManyField(Effects, blank=True)
     slug = models.SlugField(null=True, unique=True)
-    Office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
+    office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
     HP = models.IntegerField(blank=True, null=True)
     Stagger = models.IntegerField(blank=True, null=True)
     SpeedMin = models.IntegerField(blank=True, null=True)
@@ -113,7 +113,7 @@ class Card(models.Model):
     Cost = models.IntegerField()
     On_Play_Effect = models.TextField(null=True, blank=True)
     Dice_Number = models.IntegerField(null=True)
-    Office = models.ForeignKey(Office, on_delete=models.CASCADE)
+    office = models.ForeignKey(Office, on_delete=models.CASCADE)
     ImgPath = models.CharField(max_length=300, null=True)
     Roll1 = models.CharField(max_length=10, null=True, blank=True)
     Eff1 = models.CharField(max_length=200, null=True, blank=True)
@@ -268,7 +268,7 @@ class AbnoCards(models.Model):
     effects = models.TextField()
     description = models.TextField()
     ImgPath = models.CharField(max_length=200, blank=True)
-    Office = models.ForeignKey(
+    office = models.ForeignKey(
         Office, on_delete=models.CASCADE, limit_choices_to={"Rank": 7}
     )
     BREAKDOWN = "BD"
