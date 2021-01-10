@@ -35,7 +35,7 @@ class DeckSerializers(serializers.ModelSerializer):
 
 
 class CardSerializers(serializers.ModelSerializer):
-    Office = serializers.StringRelatedField(read_only=True)
+    office = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Card
@@ -49,7 +49,7 @@ class RankSerializers(serializers.ModelSerializer):
 
 
 class AbnoSerializers(serializers.ModelSerializer):
-    Office = serializers.StringRelatedField(read_only=True)
+    office = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = AbnoCards
