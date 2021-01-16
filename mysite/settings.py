@@ -184,7 +184,7 @@ LOGIN_URL = "login"
 # Configure Django App for Heroku.
 import django_heroku
 
-django_heroku.settings(locals(), staticfiles=False)
+django_heroku.settings(locals(), staticfiles=True)
 STATICFILES_STORAGE = 'mysite.storage.WhiteNoiseStaticFilesStorage'
 
 
