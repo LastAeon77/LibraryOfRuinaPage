@@ -59,7 +59,7 @@ def OfficeHomePage(request):
     # Gets Rank id, Rank Name, number of Office in Rank, and the slug of Rank
     NumberOfOff = Office.objects.raw(
         """
-SELECT O."Rank_id" AS id, R."Name", COUNT(*) AS "rank_num", R."slug"
+SELECT O."Rank_id" AS id, R."Name", COUNT(id) AS "rank_num", R."slug"
 FROM "LoR_office" AS O INNER JOIN "LoR_rank" AS R ON O."Rank_id" = R."id"
 GROUP BY O."Rank_id", R."Name", R."slug"
 ORDER BY O."Rank_id"
@@ -93,7 +93,7 @@ def CardHomeView(request):
     Cards = Card.objects.all()
     # Gets all Office id, Rank, Name, Number of Cards, Slug, and Image Path
     Offices = Card.objects.raw(
-        """SELECT O."id",O."Rank_id",O."Name" AS "OfficeName",COUNT(*) AS "NumberOfCards", O."slug", O."ImgPath"
+        """SELECT O."id",O."Rank_id",O."Name" AS "OfficeName",COUNT(id) AS "NumberOfCards", O."slug", O."ImgPath"
 FROM ("LoR_office" AS O INNER JOIN "LoR_card" AS C ON O."id" = C."office_id")
 GROUP BY O."id"
 ORDER BY O."id"
@@ -103,7 +103,7 @@ ORDER BY O."id"
     # Get all Rank Name, id, Number of Offices in Rank, slug, and image path.
 
     Ranks = Card.objects.raw(
-        """SELECT R.id AS id,R."Name" AS RankName,COUNT(*) AS "NumberOfOffices", R."slug",R."ImgPath"
+        """SELECT R.id AS id,R."Name" AS RankName,COUNT(id) AS "NumberOfOffices", R."slug",R."ImgPath"
 FROM ("LoR_office" AS O LEFT JOIN "LoR_rank" AS R ON O."Rank_id" = R."id")
 GROUP BY R."id"
 ORDER BY R."id"
