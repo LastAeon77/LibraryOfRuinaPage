@@ -27,4 +27,5 @@ urlpatterns = [
     path("api/abno/", views.AbnoViewSet.as_view(), name="AbnoAPIView"),
     path("abno/", views.AbnoList, name="AbnoHome"),
     path("abno/<int:pk>", views.AbnoView.as_view(), name="Abno"),
+    path("api/effects", views.EffectListView.as_view(), name="Effects"),
 ] + staticfiles_urlpatterns()

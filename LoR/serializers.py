@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from LoR.models import Deck, Card, Rank, RelDeck, AbnoCards
+from LoR.models import Deck, Card, Rank, RelDeck, AbnoCards, Effects
 
 
 class CardCountSerializers(serializers.ModelSerializer):
@@ -54,3 +54,9 @@ class AbnoSerializers(serializers.ModelSerializer):
     class Meta:
         model = AbnoCards
         fields = "__all__"
+
+
+class EffectSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Effects
+        fields = ["Name", "Description"]

@@ -11,6 +11,7 @@ from .models import (
     Guide,
     RelGuide,
     AbnoCards,
+    Effects
 )
 from .forms import DeckMakerForm, GuideMakerForm
 from django.urls import reverse
@@ -23,6 +24,7 @@ from .serializers import (
     CardSerializers,
     RankSerializers,
     AbnoSerializers,
+    EffectSerializers
 )
 
 # DetailView will fetch a certain row through its unique id in url
@@ -335,3 +337,8 @@ class AbnoViewSet(generics.ListAPIView):
 
     queryset = AbnoCards.objects.all()
     serializer_class = AbnoSerializers
+
+
+class EffectListView(generics.ListAPIView):
+    queryset = Effects.objects.all()
+    serializer_class = EffectSerializers
