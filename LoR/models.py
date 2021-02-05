@@ -178,6 +178,15 @@ class Card(models.Model):
         blank=True,
         default=None,
     )
+    Roll5 = models.CharField(max_length=10, null=True, blank=True)
+    Eff5 = models.CharField(max_length=200, null=True, blank=True)
+    Type5 = models.CharField(
+        max_length=2,
+        choices=Types.choices,
+        null=True,
+        blank=True,
+        default=None,
+    )
     slug = models.SlugField(null=True, unique=True)
 
     def __str__(self):

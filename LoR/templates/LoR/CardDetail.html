@@ -91,6 +91,18 @@
         {%endif%}
         {%endif%}
     </tr>
+    <tr>
+        {%if card.Roll5 is not None%}
+        <td>5</td>
+        <td>{{card.Roll5}}</td>
+        <td>{{card.get_Type5_display}}</td>
+        {%if card.Eff5 is not None%}
+        <td>{{card.Eff5}}</td>
+        {%else%}
+        <td>-</td>
+        {%endif%}
+        {%endif%}
+    </tr>
 
 </table>
 {% endblock content %}
