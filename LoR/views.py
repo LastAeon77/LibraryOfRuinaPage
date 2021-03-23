@@ -80,8 +80,12 @@ def CardDetailView(request, slug):
 FROM "LoR_office" AS O , "LoR_card" AS C,"LoR_rank" AS R
 WHERE R."id" = O."Rank_id" AND O."id" = C."office_id" AND C."slug" = '{slug}'"""
     )
-    context = {"card": pag[0]}
-    return render(request, "LoR/CardDetail.html", context)
+    if(pag[0].ImgPath[0] == 'L'):
+        context = {"card": pag[0]}
+        return render(request, "LoR/CardDetail.html", context)
+    else:
+        context = {"card": pag[0]}
+        return render(request, "LoR/CardDetail2.html", context)
 
 
 class cardSerial(generics.RetrieveAPIView):

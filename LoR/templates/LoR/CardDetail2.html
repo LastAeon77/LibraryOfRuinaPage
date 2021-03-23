@@ -1,0 +1,108 @@
+{% extends "home/NavBarBase.html" %}
+{% load static%}
+{% block content %}
+
+<div class ="has-text-centered is-size-4 ">
+    <h1 class = "is-size-1 has-text-weight-bold has-text-light">{{ card.Name }}</h1>
+    <div class="box has-background-grey">
+        <img src="{{card.ImgPath}}" alt="{{card.Name}}" />
+    </div>
+    <table class="table is-bordered is-halfwidth has-background-black has-text-light">
+     <tr>
+        <th>Rarity:</th>
+        <td>{{card.get_Rarity_display}}</td>
+      </tr>
+      <tr>
+        <th>Rank:</th>
+        <td>{{card.Rank}}<img src="{% static  card.RankImg  %}" style="max-height: 20px; max-width: 20px;" /></td>
+      </tr>
+      <tr>
+        <th>Guest:</th>
+        <td>{{card.off}}<img src="{% static  card.OffImg  %}" style="max-height: 20px; max-width: 20px;" /></td>
+      </tr>
+    </table>
+</div>
+
+<table class="table is-bordered is-fullwidth has-background-info">
+<tr>
+    <th>On Play Effect:</th>
+    <td><strong>{{card.On_Play_Effect}}</strong></td>
+</tr>
+<tr>
+    <th>Cost:</th>
+    <td><strong>{{card.Cost}}</strong></td>
+</tr>
+
+</table>
+<table class="table is-bordered is-fullwidth has-background-info">
+    <thead>
+    <tr>
+        <th>Dice #</th>
+        <th>Damage Rolls</th>
+        <th>Type</th>
+        <th>Dice Effect</th>
+    </tr>
+    </thead>
+    <tr>
+        {%if card.Roll1 is not None%}
+        <td>1</td>
+        <td>{{card.Roll1}}</td>
+        <td>{{card.get_Type1_display}}</td>
+        {%if card.Eff1 is not None%}
+        <td>{{card.Eff1}}</td>
+        {%else%}
+        <td>-</td>
+        {%endif%}
+        {%endif%}
+    </tr>
+    <tr>
+        {%if card.Roll2 is not None%}
+        <td>2</td>
+        <td>{{card.Roll2}}</td>
+        <td>{{card.get_Type2_display}}</td>
+        {%if card.Eff2 is not None%}
+        <td>{{card.Eff2}}</td>
+        {%else%}
+        <td>-</td>
+        {%endif%}
+        {%endif%}
+    </tr>
+    <tr>
+        {%if card.Roll3 is not None%}
+        <td>3</td>
+        <td>{{card.Roll3}}</td>
+        <td>{{card.get_Type3_display}}</td>
+        {%if card.Eff3 is not None%}
+        <td>{{card.Eff3}}</td>
+        {%else%}
+        <td>-</td>
+        {%endif%}
+        {%endif%}
+    </tr>
+    <tr>
+        {%if card.Roll4 is not None%}
+        <td>4</td>
+        <td>{{card.Roll4}}</td>
+        <td>{{card.get_Type4_display}}</td>
+        {%if card.Eff4 is not None%}
+        <td>{{card.Eff4}}</td>
+        {%else%}
+        <td>-</td>
+        {%endif%}
+        {%endif%}
+    </tr>
+    <tr>
+        {%if card.Roll5 is not None%}
+        <td>5</td>
+        <td>{{card.Roll5}}</td>
+        <td>{{card.get_Type5_display}}</td>
+        {%if card.Eff5 is not None%}
+        <td>{{card.Eff5}}</td>
+        {%else%}
+        <td>-</td>
+        {%endif%}
+        {%endif%}
+    </tr>
+
+</table>
+{% endblock content %}
