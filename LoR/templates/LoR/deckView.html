@@ -19,7 +19,7 @@
     <p class="is-size-4 has-text-warning">Page Effects: </p>
     <ul>
         {% for effs in deck.effect.all %}
-        <li class = "has-text-primary">{{effs}}</li>
+        <li class="has-text-primary">{{effs}}</li>
         {% endfor %}
     </ul>
     <br>
@@ -38,7 +38,12 @@
         {%for cardie in deckCards%}
         {% with ''|center:cardie.card_count as range %}
         {% for _ in range %}
+        {% if cardie.card_id.check_if_static %}
         <img src="{% static  cardie.card_id.ImgPath %}" height="310" width="410" alt="{{cardie.card_id}} Icon" />
+        {% else %}
+        <img src="{{cardie.card_id.ImgPath }}" height="310" width="410" alt="{{cardie.card_id}} Icon" />
+        {% endif %}
+
         {% endfor %}
         {% endwith %}
         {% endfor %}

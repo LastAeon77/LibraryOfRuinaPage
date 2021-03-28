@@ -194,6 +194,11 @@ class Card(models.Model):
 
     def getid(self):
         return self.pk
+    def check_if_static(self):
+        if self.ImgPath[0:4] == 'http':
+            return False
+        else:
+            return True
 
 
 # model for decks
