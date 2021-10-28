@@ -75,16 +75,18 @@ ORDER BY O."Rank_id"
 # This is the view for a Card
 def CardDetailView(request, slug):
     # Gets Card information, its Rank, its Office, its Rank Image Path, and its Office Image Path with corresponding slug
-    pag = Card.objects.raw(
-        f"""SELECT C.*, R."Name" AS "Rank", O."Name" AS "off",R."ImgPath" AS "RankImg", O."ImgPath" AS "OffImg"
-FROM "LoR_office" AS O , "LoR_card" AS C,"LoR_rank" AS R
-WHERE R."id" = O."Rank_id" AND O."id" = C."office_id" AND C."slug" = '{slug}'"""
-    )
-    if(pag[0].ImgPath[0] == 'L'):
-        context = {"card": pag[0]}
+#     pag = Card.objects.raw(
+#         f"""SELECT C.*, R."Name" AS "Rank", O."Name" AS "off",R."ImgPath" AS "RankImg", O."ImgPath" AS "OffImg"
+# FROM "LoR_office" AS O , "LoR_card" AS C,"LoR_rank" AS R
+# WHERE R."id" = O."Rank_id" AND O."id" = C."office_id" AND C."slug" = '{slug}'"""
+#     )
+    pag = Card.objects.get(slug = slug)
+
+    if(pag.ImgPath[0] == 'L'):
+        context = {"card": pag}
         return render(request, "LoR/CardDetail.html", context)
     else:
-        context = {"card": pag[0]}
+        context = {"card": pag}
         return render(request, "LoR/CardDetail2.html", context)
 
 

@@ -14,11 +14,11 @@
       </tr>
       <tr>
         <th>Rank:</th>
-        <td>{{card.Rank}}<img src="{% static  card.RankImg  %}" style="max-height: 20px; max-width: 20px;" /></td>
+        <td>{{card.Rank}}<img src="{% static  card.office.Rank.ImgPath  %}" style="max-height: 20px; max-width: 20px;" /></td>
       </tr>
       <tr>
         <th>Guest:</th>
-        <td>{{card.off}}<img src="{% static  card.OffImg  %}" style="max-height: 20px; max-width: 20px;" /></td>
+        <td>{{card.office.name}}<img src="{% static  card.office.ImgPath  %}" style="max-height: 20px; max-width: 20px;" /></td>
       </tr>
     </table>
 </div>
