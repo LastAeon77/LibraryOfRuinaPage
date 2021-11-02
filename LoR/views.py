@@ -90,11 +90,6 @@ def CardDetailView(request, slug):
         return render(request, "LoR/CardDetail2.html", context)
 
 
-class cardSerial(generics.RetrieveAPIView):
-    queryset = Card.objects.all()
-    serializer_class = CardSerializers
-
-
 # This is a view for the list of all the cards
 def CardHomeView(request):
     # Gets all Card Object
@@ -348,3 +343,8 @@ class AbnoViewSet(generics.ListAPIView):
 class EffectListView(generics.ListAPIView):
     queryset = Effects.objects.all()
     serializer_class = EffectSerializers
+
+
+class CardListView(generics.ListAPIView):
+    queryset = Card.objects.all()
+    serializer_class = CardSerializers

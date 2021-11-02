@@ -36,7 +36,7 @@ class DeckSerializers(serializers.ModelSerializer):
 
 class CardSerializers(serializers.ModelSerializer):
     office = serializers.StringRelatedField(read_only=True)
-
+    rank = serializers.ReadOnlyField(source='office.Rank.Name')
     class Meta:
         model = Card
         fields = "__all__"
