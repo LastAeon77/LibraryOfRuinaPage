@@ -11,7 +11,7 @@ from .models import (
     Guide,
     RelGuide,
     AbnoCards,
-    Effects
+    Effects,
 )
 from .forms import DeckMakerForm, GuideMakerForm
 from django.urls import reverse
@@ -24,7 +24,7 @@ from .serializers import (
     CardSerializers,
     RankSerializers,
     AbnoSerializers,
-    EffectSerializers
+    EffectSerializers,
 )
 
 # DetailView will fetch a certain row through its unique id in url
@@ -75,14 +75,14 @@ ORDER BY O."Rank_id"
 # This is the view for a Card
 def CardDetailView(request, slug):
     # Gets Card information, its Rank, its Office, its Rank Image Path, and its Office Image Path with corresponding slug
-#     pag = Card.objects.raw(
-#         f"""SELECT C.*, R."Name" AS "Rank", O."Name" AS "off",R."ImgPath" AS "RankImg", O."ImgPath" AS "OffImg"
-# FROM "LoR_office" AS O , "LoR_card" AS C,"LoR_rank" AS R
-# WHERE R."id" = O."Rank_id" AND O."id" = C."office_id" AND C."slug" = '{slug}'"""
-#     )
-    pag = Card.objects.get(slug = slug)
+    #     pag = Card.objects.raw(
+    #         f"""SELECT C.*, R."Name" AS "Rank", O."Name" AS "off",R."ImgPath" AS "RankImg", O."ImgPath" AS "OffImg"
+    # FROM "LoR_office" AS O , "LoR_card" AS C,"LoR_rank" AS R
+    # WHERE R."id" = O."Rank_id" AND O."id" = C."office_id" AND C."slug" = '{slug}'"""
+    #     )
+    pag = Card.objects.get(slug=slug)
 
-    if(pag.ImgPath[0] == 'L'):
+    if pag.ImgPath[0] == "L":
         context = {"card": pag}
         return render(request, "LoR/CardDetail.html", context)
     else:
@@ -211,10 +211,7 @@ def guide_maker_form(request):
                 ]
                 y = collections.Counter(list_of_decks)
                 q = Guide(
-                    name=name,
-                    creator=creator,
-                    description=desc,
-                    Recc_Floor=recc_floor,
+                    name=name, creator=creator, description=desc, Recc_Floor=recc_floor,
                 )
                 q.save()
                 for decks in y:
