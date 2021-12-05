@@ -350,6 +350,6 @@ class DeckListView(generics.ListAPIView):
     queryset = Deck.objects.all()
     serializer_class = DeckSerializers
 
-class PureDeckListView(generic.ListAPIView):
+class PureDeckListView(generics.ListAPIView):
     queryset = Deck.objects.all()
     serializer_class = PureDeckSerializers
