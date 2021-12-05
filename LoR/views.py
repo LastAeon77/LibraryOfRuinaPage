@@ -345,3 +345,7 @@ class EffectListView(generics.ListAPIView):
 class CardListView(generics.ListAPIView):
     queryset = Card.objects.all()
     serializer_class = CardSerializers
+
+class DeckListView(generics.ListAPIView):
+    queryset = Deck.objects.all()
+    serializer_class = DeckSerializers

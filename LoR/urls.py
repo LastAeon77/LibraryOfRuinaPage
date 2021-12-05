@@ -28,5 +28,5 @@ urlpatterns = [
     path("abno/", views.AbnoList, name="AbnoHome"),
     path("abno/<int:pk>", views.AbnoView.as_view(), name="Abno"),
     path("api/effects", views.EffectListView.as_view(), name="Effects"),
-    path("api/deck/",views.deckSerail.as_view(),name="DeckAllView")
+    path("api/deck/",views.DeckListView.as_view(),name="DeckAllView")
 ] + staticfiles_urlpatterns()
