@@ -25,6 +25,7 @@ from .serializers import (
     RankSerializers,
     AbnoSerializers,
     EffectSerializers,
+    PureDeckSerializers
 )
 
 # DetailView will fetch a certain row through its unique id in url
@@ -120,7 +121,6 @@ ORDER BY R."id"
 @login_required
 def deck_maker_form(request):
     if request.user.is_authenticated:
-
         if request.method == "POST":
             form = DeckMakerForm(request.POST)
             if form.is_valid():
@@ -349,3 +349,7 @@ class CardListView(generics.ListAPIView):
 class DeckListView(generics.ListAPIView):
     queryset = Deck.objects.all()
     serializer_class = DeckSerializers
+
+class PureDeckListView(generic.ListAPIView):
+    queryset = Deck.objects.all()
+    serializer_class = PureDeckSerializers

@@ -16,6 +16,10 @@ class CardDeckSerializers(serializers.ModelSerializer):
         model = Card
         fields = ["Name", "ImgPath"]
 
+class PureDeckSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Deck
+        fields = "__all__"
 
 class DeckSerializers(serializers.ModelSerializer):
     card_count = serializers.SerializerMethodField()
